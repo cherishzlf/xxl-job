@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xxl.job.executor.service.first.ExeWorklogAlbumService" >
+
+    <sql id="sql_column_list">
+        id,
+        regionId,
+        regionLeval,
+        regionName,
+        parentsId,
+        createTime,
+        uploadCount,
+        logCount
+    </sql>
+
+  <select id="findAllCount" resultType="int">
+      select COUNT(*) from exe_worklog_album
+  </select>
+
+  <insert id="insert" parameterType="com.xxl.job.executor.domain.ExeWorklogAlbum" >
+    insert into exe_worklog_album
+    (
+      ID, REGIONID, REGIONLEVAL, REGIONNAME, PARENTSID, CREATETIME, uploadCount, logCount
+    )
+    values
+    (
+      #{id}, #{regionId}, #{regionLeval}, #{regionName}, #{parentsId}, #{createTime}, #{uploadCount},  #{logCount}
+    )
+  </insert>
+
+  <select id="statisticsAlbumAndWorkLogByRegionId" parameterType="java.lang.Long" resultType="com.xxl.job.executor.vo.ExeWorklogAlbumVO">
+    SELECT
+    upload.ID AS regionId,
+    upload.regionlevel AS regionleval,
+    upload.`NAME` AS regionName,
+    upload.uploadCount AS uploadcount,
+    wlog.logCount AS logcount
+    FROM
+    (
+        SELECT
+        region.ID,
+        region.NAME,
+        region.regionlevel,
+        COUNT(u.ID) AS uploadCount
+        FROM
+        (
+          SELECT ma.* FROM md_adminregion AS ma,
+		  (
+		    SELECT PARENTS FROM md_adminregion WHERE ID = #{regionId}
+		  ) AS parentRegion
+		  WHERE
+		  ma.PARENTS = CONCAT_WS('|',parentRegion.PARENTS,ma.ID)
+        ) AS region
+        LEFT JOIN
+        (
+            SELECT su.* FROM
+            sm_user su,app_album aa
+            WHERE su.USERNAME = aa.UPLOADUSER
+            /*AND aa.UPLOADDATE BETWEEN DATE_ADD(curdate(),INTERVAL -day(curdate())+1 day) AND DATE_SUB(curdate(),INTERVAL -1 DAY)*/
+        ) AS u
+        ON CASE region.ID
+        WHEN u.PROVINCEID THEN region.ID = u.PROVINCEID
+        WHEN u.CITYID THEN region.ID = u.CITYID
+        WHEN u.COUNTYID THEN region.ID = u.COUNTYID
+        WHEN u.TOWNID THEN region.ID = u.TOWNID
+        WHEN u.VILLAGEID THEN region.ID = u.VILLAGEID
+        END
+        GROUP BY region.ID
+    ) AS upload,
+    (
+        SELECT
+        region.ID,
+        region.NAME,
+        region.regionlevel,
+        COUNT(log.ID) AS logCount
+        FROM
+        (
+            SELECT ma.* FROM md_adminregion AS ma,
+            (
+               SELECT PARENTS FROM md_adminregion WHERE ID = #{regionId}
+            ) AS parentRegion
+            WHERE
+            ma.PARENTS = CONCAT_WS('|',parentRegion.PARENTS,ma.ID)
+        ) AS region
+        LEFT JOIN
+        (
+            SELECT lw.*,su.PROVINCEID,su.CITYID,su.COUNTYID,su.TOWNID,su.VILLAGEID FROM
+            sm_user su,log_worklog lw
+            WHERE su.ID = lw.CHAIRMANID
+            AND lw.ID IS NOT NULL
+            /*AND lw.CREATEDATE BETWEEN DATE_ADD(curdate(),INTERVAL -day(curdate())+1 day) AND DATE_SUB(curdate(),INTERVAL -1 DAY)*/
+        ) AS log
+        ON CASE region.ID
+        WHEN log.PROVINCEID THEN region.ID = log.PROVINCEID
+        WHEN log.CITYID THEN region.ID = log.CITYID
+        WHEN log.COUNTYID THEN region.ID = log.COUNTYID
+        WHEN log.TOWNID THEN region.ID = log.TOWNID
+        WHEN log.VILLAGEID THEN region.ID = log.VILLAGEID
+        END
+        GROUP BY region.ID
+    ) AS wlog
+    WHERE upload.ID = wlog.ID
+    AND upload.uploadCount <![CDATA[<>]]> 0
+    AND wlog.logCount <![CDATA[<>]]> 0
+  </select>
+</mapper>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxl.job.executor.service.first.ExeAssElectronicService">
+
+    <sql id="sql_insert_column_list">
+        <trim prefix="" prefixOverrides=",">
+            <if test="entity.id != null and entity.id != ''">,id</if>
+            <if test="entity.userId != null and entity.userId != ''">,userId</if>
+            <if test="entity.regionLevel != null">,regionLevel</if>
+            <if test="entity.userName != null and entity.userName != ''">,userName</if>
+            <if test="entity.reachId != null and entity.reachId != ''">,reachId</if>
+            <if test="entity.reachName != null and entity.reachName != ''">,reachName</if>
+            <if test="entity.basicInformation != null and entity.basicInformation != ''">,basicInformation</if>
+            <if test="entity.basicInformationScore != null">,basicInformationScore</if>
+            <if test="entity.patrolStandardInformation != null and entity.patrolStandardInformation != ''">,patrolStandardInformation</if>
+            <if test="entity.patrolStandardInformationScore != null">,patrolStandardInformationScore</if>
+            <if test="entity.patrolRiverRecord != null and entity.patrolRiverRecord != ''">,patrolRiverRecord</if>
+            <if test="entity.patrolRiverRecordScore != null">,patrolRiverRecordScore</if>
+            <if test="entity.validPatrolRiverTrack != null and entity.validPatrolRiverTrack != ''">,validPatrolRiverTrack</if>
+            <if test="entity.validPatrolRiverTrackScore != null">,validPatrolRiverTrackScore</if>
+            <if test="entity.eventDispose != null and entity.eventDispose != ''">,eventDispose</if>
+            <if test="entity.eventDisposeScore != null">,eventDisposeScore</if>
+            <if test="entity.additionItem != null and entity.additionItem != ''">,additionItem</if>
+            <if test="entity.additionItemScore != null">,additionItemScore</if>
+            <if test="entity.eventComplain != null and entity.eventComplain != ''">,eventComplain</if>
+            <if test="entity.eventComplainScore != null">,eventComplainScore</if>
+            <if test="entity.totalScore != null">,totalScore</if>
+            <if test="entity.provinceId != null and entity.provinceId != ''">,provinceId</if>
+            <if test="entity.cityId != null and entity.cityId != ''">,cityId</if>
+            <if test="entity.countyId != null and entity.countyId != ''">,countyId</if>
+            <if test="entity.townId != null and entity.townId != ''">,townId</if>
+            <if test="entity.villageId != null and entity.villageId != ''">,villageId</if>
+            <if test="entity.assessTime != null and entity.assessTime != ''">,assessTime</if>
+            <if test="entity.createTime != null">,createTime</if>
+            <if test="entity.isUpload != null">,isUpload</if>
+            <if test="entity.description != null">,description</if>
+        </trim>
+    </sql>
+
+    <sql id="sql_insert_property_list">
+        <trim prefix="" prefixOverrides=",">
+            <if test="entity.id != null and entity.id != ''">,#{entity.id}</if>
+            <if test="entity.userId != null and entity.userId != ''">,#{entity.userId}</if>
+            <if test="entity.regionLevel != null">,#{entity.regionLevel}</if>
+            <if test="entity.userName != null and entity.userName != ''">,#{entity.userName}</if>
+            <if test="entity.reachId != null and entity.reachId != ''">,#{entity.reachId}</if>
+            <if test="entity.reachName != null and entity.reachName != ''">,#{entity.reachName}</if>
+            <if test="entity.basicInformation != null and entity.basicInformation != ''">,#{entity.basicInformation}</if>
+            <if test="entity.basicInformationScore != null">,#{entity.basicInformationScore}</if>
+            <if test="entity.patrolStandardInformation != null and entity.patrolStandardInformation != ''">,#{entity.patrolStandardInformation}</if>
+            <if test="entity.patrolStandardInformationScore != null">,#{entity.patrolStandardInformationScore}</if>
+            <if test="entity.patrolRiverRecord != null and entity.patrolRiverRecord != ''">,#{entity.patrolRiverRecord}</if>
+            <if test="entity.patrolRiverRecordScore != null">,#{entity.patrolRiverRecordScore}</if>
+            <if test="entity.validPatrolRiverTrack != null and entity.validPatrolRiverTrack != ''">,#{entity.validPatrolRiverTrack}</if>
+            <if test="entity.validPatrolRiverTrackScore != null">,#{entity.validPatrolRiverTrackScore}</if>
+            <if test="entity.eventDispose != null and entity.eventDispose != ''">,#{entity.eventDispose}</if>
+            <if test="entity.eventDisposeScore != null">,#{entity.eventDisposeScore}</if>
+            <if test="entity.additionItem != null and entity.additionItem != ''">,#{entity.additionItem}</if>
+            <if test="entity.additionItemScore != null">,#{entity.additionItemScore}</if>
+            <if test="entity.eventComplain != null and entity.eventComplain != ''">,#{entity.eventComplain}</if>
+            <if test="entity.eventComplainScore != null">,#{entity.eventComplainScore}</if>
+            <if test="entity.totalScore != null">,#{entity.totalScore}</if>
+            <if test="entity.provinceId != null and entity.provinceId != ''">,#{entity.provinceId}</if>
+            <if test="entity.cityId != null and entity.cityId != ''">,#{entity.cityId}</if>
+            <if test="entity.countyId != null and entity.countyId != ''">,#{entity.countyId}</if>
+            <if test="entity.townId != null and entity.townId != ''">,#{entity.townId}</if>
+            <if test="entity.villageId != null and entity.villageId != ''">,#{entity.villageId}</if>
+            <if test="entity.assessTime != null and entity.assessTime != ''">,#{entity.assessTime}</if>
+            <if test="entity.createTime != null">,#{entity.createTime}</if>
+            <if test="entity.isUpload != null">,#{entity.isUpload}</if>
+            <if test="entity.description != null">,#{entity.description}</if>
+        </trim>
+    </sql>
+
+    <sql id="sql_column_list">
+        Id,
+        userId,
+        regionLevel,
+        userName,
+        reachId,
+        reachName,
+        basicInformation,
+        basicInformationScore,
+        patrolStandardInformation,
+        patrolStandardInformationScore,
+        patrolRiverRecord,
+        patrolRiverRecordScore,
+        validPatrolRiverTrack,
+        validPatrolRiverTrackScore,
+        eventDispose,
+        eventDisposeScore,
+        additionItem,
+        additionItemScore,
+        eventComplain,
+        eventComplainScore,
+        totalScore,
+        provinceId,
+        cityId,
+        countyId,
+        townId,
+        villageId,
+        assessTime,
+        createTime,
+        isUpload,
+        description
+    </sql>
+
+    <insert id="insert" parameterType="java.util.Map">
+        INSERT INTO exe_ass_electronic (
+        <include refid="sql_insert_column_list" />
+        ) VALUES (
+        <include refid="sql_insert_property_list" />
+        )
+    </insert>
+    
+    <select id="findLogLocusRecordByUserIdAndReachId" parameterType="String" resultType="com.xxl.job.executor.vo.ExeAssElectronicVO">
+        SELECT
+        ID locusId,
+        WORKLOGID,
+        STARTTIME,
+        ENDTIME
+        FROM md_locusrecord
+        WHERE WORKLOGID IS NOT NULL
+        AND USERID = #{userId} AND REACHID = #{reachId}
+        AND ENDTIME BETWEEN DATE_ADD(curdate(),INTERVAL -day(curdate())+1 day) AND DATE_SUB(curdate(),INTERVAL -1 DAY)
+        /*AND ENDTIME BETWEEN '2017-11-01' AND '2017-12-01'*/
+    </select>
+
+    <select id="getPatrolContentByWorkLogId" parameterType="String" resultType="com.xxl.job.executor.vo.ExeAssElectronicVO">
+        SELECT
+        ID workLogId,
+        CONTENT content,
+        CHECKITEMS checkItems,
+        LOGDATE createTime
+        FROM log_worklog WHERE ID = #{workLogId};
+    </select>
+
+    <select id="findAccessoryUrlByWorkLogId" parameterType="String" resultType="String">
+        SELECT ACCESSORYURL accessoryUrl FROM log_accessory  WHERE WORKLOGID = #{workLogId};
+    </select>
+
+    <select id="findUntreatedEventByReachId" parameterType="String" resultType="com.xxl.job.executor.vo.ExeAssElectronicVO">
+        SELECT
+        ID eventId,
+        EVENTREACHNAME reachName,
+        TYPENAME eventType,
+        EVENTRESOURCE eventResource,
+        CREATETIME,
+        ENDTIME FROM `eh_event`
+        WHERE EVENTREACHID = #{reachId}
+        AND `STATUS` <![CDATA[<>]]> 'X' AND `STATUS` <![CDATA[<>]]> 'Z'
+        /*Last month last ${eventInterval} days to tomorrow*/
+        AND REPORTTIME BETWEEN concat(date_format(LAST_DAY(now() - INTERVAL 1 MONTH),'%Y-%m-'),DAY(LAST_DAY(now() - INTERVAL 1 MONTH) - ${eventInterval}))
+        AND DATE_SUB(curdate(),INTERVAL -1 DAY)
+        /*AND REPORTTIME BETWEEN '2017-10-21' AND '2017-12-01'*/
+    </select>
+
+    <select id="findComplaintsByReachId" parameterType="String" resultType="com.xxl.job.executor.vo.ExeAssElectronicVO">
+        SELECT
+        ID eventId,
+        EVENTREACHID reachId,
+        EVENTREACHNAME reachName,
+        TYPENAME eventType
+        FROM `eh_event`
+        WHERE EVENTREACHID = #{reachId}
+        AND `STATUS` <![CDATA[<>]]> 'X' AND EVENTREACHID  IS NOT NULL
+        AND REPORTTIME BETWEEN DATE_ADD(curdate(),INTERVAL -day(curdate())+1 day) AND DATE_SUB(curdate(),INTERVAL -1 DAY)
+        /*AND REPORTTIME BETWEEN '2017-11-01' AND '2017-12-01'*/
+    </select>
+
+    <select id="getPurposeCheck" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.ExeAssElectronic">
+        select * from exe_ass_electronic where assessTime = #{assessTime} and isupload !=1
+    </select>
+    <update id="updateUploadByIdList" parameterType="java.util.List">
+        update exe_ass_electronic set isupload = 1 where id in
+        <foreach collection="idList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <delete id="deleteByAssessTime" parameterType="String">
+        DELETE FROM exe_ass_electronic WHERE assessTime = #{assessTime}
+    </delete>
+
+    <select id="findUserIdByAssessTime" parameterType="String" resultType="String">
+        SELECT USERID FROM `exe_ass_electronic` WHERE ASSESSTIME = #{assessTime} GROUP BY USERID;
+    </select>
+
+    <select id="findByUserIdAndAssessTime" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.ExeAssElectronic">
+        SELECT USERID,USERNAME,REGIONLEVEL,BASICINFORMATIONSCORE, PATROLSTANDARDINFORMATIONSCORE,
+        PATROLRIVERRECORDSCORE, VALIDPATROLRIVERTRACKSCORE,EVENTDISPOSESCORE,ADDITIONITEMSCORE,EVENTCOMPLAINSCORE,
+        PROVINCEID,CITYID,COUNTYID,TOWNID,VILLAGEID
+        FROM exe_ass_electronic WHERE USERID = #{userId} AND ASSESSTIME = #{assessTime}
+    </select>
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxl.job.executor.service.first.ExeAssSystemService">
+
+  <sql id="Base_Column_List">
+    t.id,
+    t.chairman_name,
+    t.chairman_level,
+    t.reach_name,
+    t.log_ought_num,
+    t.log_already_num,
+    t.log_finishing_rate,
+    t.event_num,
+    t.event_processing,
+    t.event_closure,
+    t.event_closure_rate,
+    t.publicity_card_num,
+    t.province_id,
+    t.city_id,
+    t.county_id,
+    t.town_id,
+    t.village_id,
+    t.chairman_id,
+    t.reach_id,
+    t.month,
+    t.quarter,
+    t.year,
+    t.region_level,
+    t.create_time,
+    t.remark
+  </sql>
+
+  <insert id="save" parameterType="com.xxl.job.executor.domain.ExeAssSystem">
+    INSERT INTO exe_ass_system (
+      id,
+      chairman_name,
+      chairman_level,
+      reach_name,
+      log_ought_num,
+      log_already_num,
+      log_finishing_rate,
+      event_num,
+      event_processing,
+      event_closure,
+      event_closure_rate,
+      publicity_card_num,
+      province_id,
+      city_id,
+      county_id,
+      town_id,
+      village_id,
+      chairman_id,
+      reach_id,
+      month,
+      quarter,
+      year,
+      region_level,
+      create_time,
+      remark
+    ) VALUES (
+      #{id},
+      #{chairmanName},
+      #{chairmanLevel},
+      #{reachName},
+      #{logOughtNum},
+      #{logAlreadyNum},
+      #{logFinishingRate},
+      #{eventNum},
+      #{eventProcessing},
+      #{eventClosure},
+      #{eventClosureRate},
+      #{publicityCardNum},
+      #{provinceId},
+      #{cityId},
+      #{countyId},
+      #{townId},
+      #{villageId},
+      #{chairmanId},
+      #{reachId},
+      #{month},
+      #{quarter},
+      #{year},
+      #{regionLevel},
+      #{createTime},
+      #{remark}
+    );
+  </insert>
+
+  <select id="pageList" parameterType="java.util.HashMap" resultType="com.xxl.job.executor.domain.ExeAssSystem">
+    SELECT <include refid="Base_Column_List" />
+    FROM exe_ass_system AS t
+    ORDER BY id DESC
+    LIMIT #{offset}, #{pagesize}
+  </select>
+
+  <select id="pageListCount" parameterType="java.util.HashMap" resultType="int">
+    SELECT count(1)
+    FROM exe_ass_system AS t
+  </select>
+
+  <select id="loadById" parameterType="java.util.HashMap" resultType="com.xxl.job.executor.domain.ExeAssSystem">
+    SELECT <include refid="Base_Column_List" />
+    FROM exe_ass_system AS t
+    WHERE t.id = #{id}
+  </select>
+
+  <select id="getExeAssSystemByName" parameterType="java.util.HashMap" resultType="com.xxl.job.executor.domain.ExeAssSystem">
+    SELECT <include refid="Base_Column_List" />
+    FROM exe_ass_system AS t
+    WHERE t.chairmanname = #{chairmanname}
+  </select>
+
+  <select id="findAllCount" resultType="java.lang.Integer">
+    SELECT count(1)
+    FROM exe_ass_system
+  </select>
+
+  <select id="callProcedureByCondition" parameterType="com.xxl.job.executor.vo.ExeAssSystemVO" statementType="CALLABLE" resultType="com.xxl.job.executor.domain.ExeAssSystem">
+    CALL AM_CALCULATE_CHAIRMAN_DATA_copy (
+      #{asstype},
+      #{year},
+      #{monthorquarter},
+      #{chairmanid},
+      #{regionid},
+      #{chairmanlevel},
+      #{chairmanname},
+      #{pageNumber},
+      #{pageSize}
+    )
+  </select>
+
+</mapper>

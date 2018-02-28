@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.AmTemplateSpecialScoreService">
+  <resultMap id="amTemplateSpecialScore" type="com.xxl.job.executor.domain.AmTemplateSpecialScore">
+    <result property="id" column="id" />
+    <result property="chairmanaeeseeid" column="chairmanaeeseeid" />
+    <result property="majortermid" column="majortermid" />
+    <result property="minortermid" column="minortermid" />
+    <result property="title" column="title" />
+    <result property="termparentsid" column="termparentsid" />
+    <result property="scoretype" column="scoretype" />
+    <result property="scoretimes" column="scoretimes" />
+    <result property="singlescore" column="singlescore" />
+    <result property="score" column="score" />
+    <result property="assesstime" column="assesstime" />
+    <result property="createtime" column="createtime" />
+    <result property="description" column="description" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null and entity.id != ''">,id</if>
+      <if test="entity.chairmanaeeseeid != null and entity.chairmanaeeseeid != ''">,chairmanaeeseeid</if>
+      <if test="entity.majortermid != null and entity.majortermid != ''">,majortermid</if>
+      <if test="entity.minortermid != null and entity.minortermid != ''">,minortermid</if>
+      <if test="entity.title != null and entity.title != ''">,title</if>
+      <if test="entity.termparentsid != null and entity.termparentsid != ''">,termparentsid</if>
+      <if test="entity.scoretype != null">,scoretype</if>
+      <if test="entity.scoretimes != null">,scoretimes</if>
+      <if test="entity.singlescore != null">,singlescore</if>
+      <if test="entity.score != null">,score</if>
+      <if test="entity.assesstime != null and entity.assesstime != ''">,assesstime</if>
+      <if test="entity.createtime != null">,createtime</if>
+      <if test="entity.description != null and entity.description != ''">,description</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null and entity.id != ''">,#{entity.id}</if>
+      <if test="entity.chairmanaeeseeid != null and entity.chairmanaeeseeid != ''">,#{entity.chairmanaeeseeid}</if>
+      <if test="entity.majortermid != null and entity.majortermid != ''">,#{entity.majortermid}</if>
+      <if test="entity.minortermid != null and entity.minortermid != ''">,#{entity.minortermid}</if>
+      <if test="entity.title != null and entity.title != ''">,#{entity.title}</if>
+      <if test="entity.termparentsid != null and entity.termparentsid != ''">,#{entity.termparentsid}</if>
+      <if test="entity.scoretype != null">,#{entity.scoretype}</if>
+      <if test="entity.scoretimes != null">,#{entity.scoretimes}</if>
+      <if test="entity.singlescore != null">,#{entity.singlescore}</if>
+      <if test="entity.score != null">,#{entity.score}</if>
+      <if test="entity.assesstime != null and entity.assesstime != ''">,#{entity.assesstime}</if>
+      <if test="entity.createtime != null">,#{entity.createtime}</if>
+      <if test="entity.description != null and entity.description != ''">,#{entity.description}</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,chairmanaeeseeid
+    ,majortermid
+    ,minortermid
+    ,title
+    ,termparentsid
+    ,scoretype
+    ,scoretimes
+    ,singlescore
+    ,score
+    ,assesstime
+    ,createtime
+    ,description
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <if test="entity.id != null and entity.id != ''">,id = #{entity.id}</if>
+        <if test="entity.chairmanaeeseeid != null and entity.chairmanaeeseeid != ''">,chairmanaeeseeid = #{entity.chairmanaeeseeid}</if>
+        <if test="entity.majortermid != null and entity.majortermid != ''">,majortermid = #{entity.majortermid}</if>
+        <if test="entity.minortermid != null and entity.minortermid != ''">,minortermid = #{entity.minortermid}</if>
+        <if test="entity.title != null and entity.title != ''">,title = #{entity.title}</if>
+        <if test="entity.termparentsid != null and entity.termparentsid != ''">,termparentsid = #{entity.termparentsid}</if>
+        <if test="entity.scoretype != null">,scoretype = #{entity.scoretype}</if>
+        <if test="entity.scoretimes != null">,scoretimes = #{entity.scoretimes}</if>
+        <if test="entity.score != null">,score = #{entity.score}</if>
+        <if test="entity.singlescore != null">,singlescore = #{entity.singlescore}</if>
+        <if test="entity.assesstime != null and entity.assesstime != ''">,assesstime = #{entity.assesstime}</if>
+        <if test="entity.createtime != null">,createtime = #{entity.createtime}</if>
+        <if test="entity.description != null and entity.description != ''">,description = #{entity.description}</if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_force_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="_parameter.containsKey('entity_id')">,id = #{entity_id, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_chairmanaeeseeid')">,chairmanaeeseeid = #{entity_chairmanaeeseeid, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_majortermid')">,majortermid = #{entity_majortermid, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_minortermid')">,minortermid = #{entity_minortermid, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_title')">,title = #{entity_title, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_termparentsid')">,termparentsid = #{entity_termparentsid, jdbcType=TEXT}</if>
+      <if test="_parameter.containsKey('entity_scoretype')">,scoretype = #{entity_scoretype, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_scoretimes')">,scoretimes = #{entity_scoretimes, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_score')">,score = #{entity_score, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_singlescore')">,singlescore = #{entity_singlescore, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_assesstime')">,assesstime = #{entity_assesstime, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_createtime')">,createtime = #{entity_createtime, jdbcType=DATETIME}</if>
+      <if test="_parameter.containsKey('entity_description')">,description = #{entity_description, jdbcType=TEXT}</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null and condition.id != ''">AND id = #{condition.id}</if>
+      <if test="condition.chairmanaeeseeid != null and condition.chairmanaeeseeid != ''">AND chairmanaeeseeid = #{condition.chairmanaeeseeid}</if>
+      <if test="condition.majortermid != null and condition.majortermid != ''">AND majortermid = #{condition.majortermid}</if>
+      <if test="condition.minortermid != null and condition.minortermid != ''">AND minortermid = #{condition.minortermid}</if>
+      <if test="condition.title != null and condition.title != ''">AND title = #{condition.title}</if>
+      <if test="condition.termparentsid != null and condition.termparentsid != ''">AND termparentsid = #{condition.termparentsid}</if>
+      <if test="condition.scoretype != null">AND scoretype = #{condition.scoretype}</if>
+      <if test="condition.scoretimes != null">AND scoretimes = #{condition.scoretimes}</if>
+      <if test="condition.singlescore != null">AND singlescore = #{condition.singlescore}</if>
+      <if test="condition.score != null">AND score = #{condition.score}</if>
+      <if test="condition.assesstime != null and condition.assesstime != ''">AND assesstime = #{condition.assesstime}</if>
+      <if test="condition.createtime != null">AND createtime = #{condition.createtime}</if>
+      <if test="condition.description != null and condition.description != ''">AND description = #{condition.description}</if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.String" order="BEFORE">
+      SELECT REPLACE(UUID(),'-','')
+    </selectKey>
+    INSERT INTO am_template_special_score (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="amTemplateSpecialScore">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM am_template_special_score
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultMap="amTemplateSpecialScore">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM am_template_special_score
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="amTemplateSpecialScore">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM am_template_special_score
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="findByIdList" parameterType="java.util.Map" resultMap="amTemplateSpecialScore">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM am_template_special_score
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM am_template_special_score
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM am_template_special_score
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE am_template_special_score
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE am_template_special_score
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <update id="updateByIdList" parameterType="java.util.Map">
+    UPDATE am_template_special_score
+    <include refid="sql_update_set" />
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </update>
+
+  <update id="forceUpdate" parameterType="java.util.Map">
+    UPDATE am_template_special_score
+    <include refid="sql_force_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="forceUpdateById" parameterType="java.util.Map">
+    UPDATE am_template_special_score
+    <include refid="sql_force_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <update id="forceUpdateByIdList" parameterType="java.util.Map">
+    UPDATE am_template_special_score
+    <include refid="sql_force_update_set" />
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM am_template_special_score
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM am_template_special_score
+    WHERE id = #{id}
+  </delete>
+
+  <delete id="removeByAssessTime" parameterType="String">
+    DELETE FROM `am_template_special_score` WHERE ASSESSTIME = #{assessTime}
+  </delete>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.MdAdminregionService">
+
+  <sql id="sql_column_list">
+    id,
+    name,
+    parents,
+    regionLevel,
+    longiTude,
+    latiTude,
+  </sql>
+
+  <select id="find" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdAdminregion">
+    SELECT id, name, parents, regionLevel, longiTude ,latiTude FROM  md_adminregion
+  </select>
+
+  <select id="getParentIdByRegionId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    SELECT SUBSTRING(
+      (SELECT PARENTS FROM md_adminregion WHERE ID = #{regionId}),
+      (LOCATE(CONCAT('|',#{regionId}),(SELECT PARENTS FROM md_adminregion WHERE ID = #{regionId})) -12 ), 12
+    )
+  </select>
+
+  <select id="findByregionName" parameterType="java.util.Map" resultType="java.lang.String">
+    select id from md_adminregion where name like CONCAT('%',#{region},'%') and regionLevel = #{regionLevel}
+  </select>
+
+  <select id="getRegionById" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdAdminregion">
+    select * from md_adminregion where id = #{id}
+  </select>
+</mapper>

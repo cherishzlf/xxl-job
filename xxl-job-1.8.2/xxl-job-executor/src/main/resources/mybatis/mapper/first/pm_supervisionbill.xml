@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.PmSupervisionService">
+    <select id="getFirstProjectProgress" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpSteeringFeedback">
+        SELECT uploadtime FROM pm_supervisionbill ps
+        join (select id from pm_project
+        <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+            <if test="regionLevel==1">where province_id=#{regionId}</if>
+            <if test="regionLevel==2">where city_id=#{regionId}</if>
+            <if test="regionLevel==3">where county_id=#{regionId}</if>
+            <if test="regionLevel==4">where town_id=#{regionId}</if>
+            <if test="regionLevel==5">where village_id=#{regionId}</if>
+        </if>
+        <if test="regionId==null or regionId==''">
+            where city_id in ('330800000000','330700000000','331100000000')
+        </if>
+        ) pj on(ps.PROJECTID=pj.id)
+        and uploadtime != ""
+        ORDER BY uploadtime DESC limit 1
+    </select>
+
+    <select id="getUpSteeringFeedbackList" resultType="com.xxl.job.executor.domain.UpSteeringFeedback">
+        select ps.id as listID,
+        reportcontent as handleDetail,
+        modifytime as feedbackTime,
+        pp.city_id as cityid
+        from
+        pm_supervisionbill ps
+        join (select id,city_id from pm_project
+        <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+            <if test="regionLevel==1">where province_id=#{regionId}</if>
+            <if test="regionLevel==2">where city_id=#{regionId}</if>
+            <if test="regionLevel==3">where county_id=#{regionId}</if>
+            <if test="regionLevel==4">where town_id=#{regionId}</if>
+            <if test="regionLevel==5">where village_id=#{regionId}</if>
+        </if>
+        <if test="regionId==null or regionId==''">
+            where city_id in ('330800000000','330700000000','331100000000')
+        </if>
+        ) pp
+        on(ps.projectid=pp.id)
+
+       /* where
+
+        pp.city_id in ('330800000000','330700000000','330500000000')
+
+        pp.city_id in ('330700000000')*/
+    </select>
+
+  <update id="updateUploadtime" parameterType="java.util.Map">
+    UPDATE pm_projectprogress set uploadtime=#{nowDate} where id IN
+    <foreach collection="idList" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+
+  </update>
+</mapper>

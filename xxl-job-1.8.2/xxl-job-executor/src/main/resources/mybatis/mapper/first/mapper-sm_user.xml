@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.SmUserService">
+    <select id="findUserListWhereRoleOnlyIsHZ" resultType="com.xxl.job.executor.vo.SmUserVO">
+        SELECT
+        u.ID,
+        u.`NAME`,
+        rc.CHAIRMANLEVEL,
+        u.CELLPHONE,
+        u.DUTY,
+        r.ID reachId,
+        r.`NAME` reachName,
+        rc.chairman_unit chairmanUnit,
+        rc.contact_department contactDepartment,
+        rc.unit_cellphone unitCellPhone,
+        u.PROVINCEID,
+        u.CITYID,
+        u.COUNTYID,
+        u.TOWNID,
+        u.VILLAGEID
+        FROM
+        (
+            SELECT * FROM sm_user `user`
+            WHERE `user`.ID IN
+            (
+                select `user`.ID from sm_user `user` ,
+                sm_userrole ur
+                where ur.ROLEID = 262 and ur.userid =`user`.id AND `user`.`STATUS` = 1
+            )
+        ) u,
+        md_reachchairman rc,
+        md_reach r
+        WHERE rc.`STATUS` = 1 AND r.`STATUS` = 1
+        AND u.ID = rc.CHAIRMANID AND rc.REACHID = r.ID
+        AND rc.CHAIRMANLEVEL = r.REACHLEVEL
+        AND rc.CHAIRMANLEVEL > 2
+    </select>
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxl.job.executor.service.first.ExeWorklogPatrolService">
+
+    <insert id="insertReachPatrol" parameterType="java.util.Map">
+        insert into
+            exe_worklog_patrol(id,reach_id,all_patrol_num,deal_patrol_num,create_time,start_time,end_time)
+        select
+            replace(UUID(),'-','')
+            ,mrh.id
+            ,sum(mrh.shouldCount) as totalnum
+            ,sum(case when llg.dealNum is null then 0
+                      when (mrh.shouldCount > llg.dealNum) then llg.dealNum
+                      else mrh.shouldCount end) as dealnum
+            ,now()
+            ,#{startTime}
+            ,#{endTime}
+        from
+            (select
+                rh.id,
+                sum(case rh.reachlevel
+                when 1 then #{amb.provinceMark}
+                when 2 then #{amb.cityMark}
+                when 3 then #{amb.countyMark}
+                when 4 then #{amb.townMark}
+                when 5 then #{amb.villageMark} end) as shouldCount
+            from
+                md_reach rh
+            where
+                (rh.provinceid = #{amb.regionId}
+                or rh.cityid = #{amb.regionId} or rh.countyid = #{amb.regionId}
+                or rh.townid = #{amb.regionId} or rh.villageid = #{amb.regionId})
+            group by
+                rh.id
+            ) mrh
+        left join
+            (select
+                wl.reachid,count(id) as dealNum
+            from
+                log_worklog wl
+            where
+                logdate between #{startTime} and #{endTime}
+            group by
+                reachid
+            ) llg
+        on
+            mrh.id = llg.reachid
+        group by
+            mrh.id
+    </insert>
+
+    <update id="updateReachPatrol" parameterType="java.util.Map">
+        update
+            exe_worklog_patrol ewp,
+            (select
+                mrh.id
+                ,sum(mrh.shouldCount) as totalnum
+                ,sum(case when llg.dealNum is null then 0
+                          when (mrh.shouldCount > llg.dealNum) then llg.dealNum
+                          else mrh.shouldCount end) as dealnum
+            from
+                (select
+                    rh.id,
+                    sum(case rh.reachlevel
+                    when 1 then #{amb.provinceMark}
+                    when 2 then #{amb.cityMark}
+                    when 3 then #{amb.countyMark}
+                    when 4 then #{amb.townMark}
+                    when 5 then #{amb.villageMark} end) as shouldCount
+                from
+                    md_reach rh
+                where
+                    (rh.provinceid = #{amb.regionId}
+                    or rh.cityid = #{amb.regionId} or rh.countyid = #{amb.regionId}
+                    or rh.townid = #{amb.regionId} or rh.villageid = #{amb.regionId})
+                    group by rh.id
+                ) mrh
+            left join
+                (select
+                    wl.reachid,count(id) as dealNum
+                from
+                    log_worklog wl
+                where
+                    logdate between #{startTime} and #{endTime}
+                group by
+                    reachid
+                ) llg
+            on
+                mrh.id = llg.reachid
+            group by
+                mrh.id
+            ) rwp
+        set
+            ewp.all_patrol_num = rwp.totalnum , ewp.deal_patrol_num = rwp.dealnum
+        where
+            ewp.reach_id = rwp.id
+    </update>
+
+    <update id="updateRate">
+        update
+            exe_worklog_patrol
+        set
+            patrol_rate = deal_patrol_num/all_patrol_num*100.00
+    </update>
+    
+    <select id="countThisMonthData" resultType="java.lang.Integer">
+        select
+            count(id)
+        from
+            exe_worklog_patrol
+        where
+            start_time = #{startTime}
+    </select>
+</mapper>

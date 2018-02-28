@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.MdSectionService">
+  <select id="getFirstSection" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpRiverSection">
+    SELECT uploadtime FROM md_section
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where cityid in ('330800000000','330700000000','330400000000')
+    </if>
+    and uploadtime is not null
+
+    ORDER BY uploadtime DESC limit 1
+  </select>
+
+  <select id="getUpSectionList" resultType="com.xxl.job.executor.domain.UpRiverSection">
+    SELECT
+    code AS sectionID,
+    name AS sectionName,
+    name AS stationName,
+    cityid,
+    countyid,
+    townid,
+    /*nowquality*/targetquality AS targetWaterQuality,
+    mc.reachid AS riverID,
+    mc.complevel AS sectionType,
+    is_important_wfarea AS isTaiLakeImportantSection,
+    is_assessment_list AS isProvinceAssess,
+    is_assessment_list AS isNationImportant,
+    LONGITUDE,
+    LATITUDE
+    FROM
+    md_section ms
+    join (select id,reachid,complevel from md_component) mc on (mc.id=ms.id)
+/*
+    left join (select sectionid,FACTOR from md_micro)mm on (mm.sectionid=ms.id)
+*/
+
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where cityid in ('330800000000','330700000000')
+    </if>
+    <if test="uploadtime!=null ">AND (createtime>#{uploadtime} or modifytime>#{uploadtime})</if>
+  </select>
+  <update id="updateUploadtime" parameterType="java.util.Map">
+    UPDATE md_section set uploadtime=#{uploadtime} where code IN
+    <foreach collection="idList" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+
+  </update>
+
+  <select id="getUpSectionId" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdSection">
+    SELECT
+    CODE,
+    cityid
+    FROM
+    md_section ms
+    JOIN (
+    SELECT
+    id
+    FROM
+    md_component
+    WHERE
+    reachid IS NOT NULL
+    AND complevel IS NOT NULL
+    ) mc ON (ms.id = mc.id)
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where cityid in ('330800000000','330700000000')
+    </if>
+    and code is not null
+  </select>
+</mapper>

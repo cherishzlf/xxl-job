@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.PmProjectService">
+  <select id="getFirstProject" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpProPlan">
+    SELECT uploadtime FROM pm_project
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==1">where province_id=#{regionId}</if>
+      <if test="regionLevel==2">where city_id=#{regionId}</if>
+      <if test="regionLevel==3">where county_id=#{regionId}</if>
+      <if test="regionLevel==4">where town_id=#{regionId}</if>
+      <if test="regionLevel==5">where village_id=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where city_id in ('330800000000','330700000000','331100000000')
+    </if>
+    and uploadtime != ""
+
+    ORDER BY uploadtime DESC limit 1
+  </select>
+
+  <select id="getUpProjectList" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpProPlan">
+   SELECT
+	ppp.id AS planID,
+	pp.name AS projectName,
+	totalinvestment AS planInvestmentFund,
+	constructioncontent AS description,
+	projecttarget AS timeLimitDescription,
+	planendtime ,
+	principal AS responsibleUnit,
+	planstarttime AS planYear,
+	sub_class_name AS projectTypeID,
+	su.name AS leaderUnit,
+	city_id AS cityId,
+	county_id AS countyId,
+	town_id AS townId,
+	ppj.content AS progressRequireDesc,
+	the_total_project as extend
+FROM
+	pm_project pp
+	join (select id,name from sm_user) su on (su.id=pp.createuser)
+	left join (select projectid,content from pm_projectprogress) ppj on(ppj.projectid=pp.id)
+	join (select id,projectid from pm_projectplan) ppp on (ppp.projectid=pp.id)
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==1">where province_id=#{regionId}</if>
+      <if test="regionLevel==2">where city_id=#{regionId}</if>
+      <if test="regionLevel==3">where county_id=#{regionId}</if>
+      <if test="regionLevel==4">where town_id=#{regionId}</if>
+      <if test="regionLevel==5">where village_id=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where city_id in ('330800000000','330700000000','331100000000')
+    </if>
+  </select>
+
+  <update id="updateUploadtime" parameterType="java.util.Map">
+    UPDATE pm_project set uploadtime=#{nowDate} where id IN
+    <foreach collection="idList" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+
+  </update>
+</mapper>

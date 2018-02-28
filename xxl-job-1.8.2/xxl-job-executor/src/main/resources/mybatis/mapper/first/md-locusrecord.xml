@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxl.job.executor.service.first.MdLocusrecordService">
+
+  <sql id="sql_column_list">
+    id
+    ,userid
+    ,createtime
+    ,starttime
+    ,endtime
+    ,year
+    ,month
+    ,day
+    ,coords
+    ,hour
+    ,day
+    ,worklogid
+    ,reachid
+    ,beginpoint
+    ,endpoint
+    ,distance
+    ,duration
+    ,duration
+    ,datasrccode
+    ,datauupflag
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.userId != null">AND userId = #{condition.userId}</if>
+      <if test="condition.createTime != null">AND createTime &lt; #{condition.createTime}</if>
+      <if test="condition.startTime != null">AND startTime = #{condition.startTime}</if>
+      <if test="condition.endTime != null">AND endTime = #{condition.endTime}</if>
+      <if test="condition.year != null">AND year = #{condition.year}</if>
+      <if test="condition.month != null">AND month = #{condition.month}</if>
+      <if test="condition.day != null">AND day = #{condition.day}</if>
+      <if test="condition.coords != null and condition.coords != ''">AND coords = #{condition.coords}</if>
+      <if test="condition.hour != null">AND hour = #{condition.hour}</if>
+      <if test="condition.minute != null">AND minute = #{condition.minute}</if>
+      <if test="condition.worklogId != null and condition.worklogId != ''">AND worklogId = #{condition.worklogId}</if>
+      <if test="condition.reachId != null and condition.reachId != ''">AND reachId = #{condition.reachId}</if>
+      <if test="condition.beginPoint != null and condition.beginPoint != ''">AND beginPoint = #{condition.beginPoint}</if>
+      <if test="condition.endPoint != null and condition.endPoint != ''">AND endPoint = #{condition.endPoint}</if>
+      <if test="condition.distance != null">AND distance = #{condition.distance}</if>
+      <if test="condition.duration != null">AND duration = #{condition.duration}</if>
+      <if test="condition.dataSrcCode != null">AND dataSrcCode = #{condition.dataSrcCode}</if>
+      <if test="condition.datauUpFlag != null">AND datauUpFlag = #{condition.datauUpFlag}</if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_end">
+    limit ${startRow-1},${endRow-startRow+1}
+  </sql>
+
+  <select id="get" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdLocusrecord">
+    SELECT
+    <include refid="sql_column_list"/>
+    FROM md_locusrecord
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition"/>
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdLocusrecord">
+    SELECT
+    <include refid="sql_column_list"/>
+    FROM md_locusrecord
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdLocusrecord">
+    SELECT
+    <include refid="sql_column_list"/>
+    FROM md_locusrecord
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition"/>
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end"/>
+    </if>
+  </select>
+
+  <select id="findByIdList" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdLocusrecord">
+    SELECT
+    <include refid="sql_column_list"/>
+    FROM md_locusrecord
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition"/>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(*) AS count_ FROM md_locusrecord
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition"/>
+    </trim>
+  </select>
+
+  <select id="getLocusrecordCountByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT
+      COUNT(*)
+    FROM md_locusrecord
+    <![CDATA[
+      WHERE reachid = #{condition.reachId}
+      AND createtime >= #{startTime} AND createtime < #{endTime}
+    ]]>
+  </select>
+
+  <select id="getFirstParolerecord" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpParolerecord">
+    SELECT uploadtime FROM md_locusrecord ml join(select log_worklog.id from log_worklog join (select id from md_reach
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+    where cityid in ('330800000000','330700000000','330400000000')
+    </if>
+    ) rh on (rh.id=log_worklog.reachid))lw on(lw.id=ml.worklogid) WHERE uploadtime is not null
+
+    ORDER BY uploadtime DESC limit 1
+  </select>
+
+  <select id="getLocusrecordForUpload" parameterType="java.util.Map"
+          resultType="com.xxl.job.executor.domain.UpParolerecord">
+    SELECT
+    ml.ID AS patrolID,
+    su. NAME AS patrollerContact,
+    ct.id AS riverid,
+    ml.distance AS length,
+    ml.starttime,
+    ml.endtime,
+    ct.cityid as cityId
+    FROM
+    md_locusrecord ml
+    JOIN (
+    SELECT id,CONCAT_WS(',', NAME, CELLPHONE) AS NAME FROM sm_user) su ON (ml.USERID = su.ID)
+    join(select id,cityid from md_reach
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where cityid in ('330800000000','330700000000','330400000000')
+    </if>
+    )ct on (ct.id=ml.reachid)
+    where createtime>='2017-11-1'and uploadtime IS NULL and ml.duration >=5
+    <if test="uploadtime!=null">AND createtime &gt; #{uploadtime}</if>
+    group by worklogid
+  </select>
+
+  <update id="updateUploadtime" parameterType="java.util.Map">
+    UPDATE md_locusrecord set uploadtime=#{uploadtime} where id IN
+    <foreach collection="idList" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <select id="getFirstZhujiTrack" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.zhuji.UpPatrol">
+    SELECT uploadtime FROM md_locusrecord ml join(select log_worklog.id from log_worklog join (select id from md_reach
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where countyid in ('330681000000')
+    </if>
+    ) rh on (rh.id=log_worklog.reachid))lw on(lw.id=ml.worklogid) WHERE uploadtime is not null
+    ORDER BY uploadtime DESC limit 1
+  </select>
+
+  <select id="getZhuJiTrack" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.zhuji.UpPatrol">
+    select ml.id,lw.srcid as patrolid,ml.coords as jsondata from md_locusrecord ml
+    join (select id,srcid from log_worklog where srcid is not null)lw on (ml.WORKLOGID = lw.id) where ml.coords != '[]' and ml.distance >=200 and ml.duration >=5
+<!--
+    <if test="uploadtime!=null ">AND (createtime>#{uploadtime} or modifytime>#{uploadtime})</if>
+-->
+    order by uploadtime asc,id desc
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    update md_locusrecord set uploadtime = #{uploadtime} where id=#{id}
+  </update>
+</mapper>

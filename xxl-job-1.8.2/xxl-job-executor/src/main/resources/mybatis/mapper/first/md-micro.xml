@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.MdMicroService">
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <if test="entity.id != null and entity.id != ''">,id = #{entity.id}</if>
+        <if test="entity.name != null and entity.name != ''">,name = #{entity.name}</if>
+        <if test="entity.control != null">,control = #{entity.control}</if>
+        <if test="entity.basinid != null and entity.basinid != ''">,basinid = #{entity.basinid}</if>
+        <if test="entity.basinname != null and entity.basinname != ''">,basinname = #{entity.basinname}</if>
+        <if test="entity.riverid != null and entity.riverid != ''">,riverid = #{entity.riverid}</if>
+        <if test="entity.rivername != null and entity.rivername != ''">,rivername = #{entity.rivername}</if>
+        <if test="entity.category != null and entity.category != ''">,category = #{entity.category}</if>
+        <if test="entity.userid != null and entity.userid != ''">,userid = #{entity.userid}</if>
+        <if test="entity.factor != null and entity.factor != ''">,factor = #{entity.factor}</if>
+        <if test="entity.reason != null and entity.reason != ''">,reason = #{entity.reason}</if>
+        <if test="entity.plan != null and entity.plan != ''">,plan = #{entity.plan}</if>
+        <if test="entity.complete != null">,complete = #{entity.complete}</if>
+        <if test="entity.state != null">,state = #{entity.state}</if>
+        <if test="entity.quality != null">,quality = #{entity.quality}</if>
+        <if test="entity.donetime != null">,donetime = #{entity.donetime}</if>
+        <if test="entity.longitude != null">,longitude = #{entity.longitude}</if>
+        <if test="entity.latitude != null">,latitude = #{entity.latitude}</if>
+        <if test="entity.provinceid != null">,provinceid = #{entity.provinceid}</if>
+        <if test="entity.cityid != null">,cityid = #{entity.cityid}</if>
+        <if test="entity.countyid != null">,countyid = #{entity.countyid}</if>
+        <if test="entity.townid != null">,townid = #{entity.townid}</if>
+        <if test="entity.villageid != null">,villageid = #{entity.villageid}</if>
+        <if test="entity.createuserid != null and entity.createuserid != ''">,createuserid = #{entity.createuserid}</if>
+        <if test="entity.createtime != null">,createtime = #{entity.createtime}</if>
+        <if test="entity.remark != null and entity.remark != ''">,remark = #{entity.remark}</if>
+        <if test="entity.sectionid != null and entity.sectionid != ''">,sectionid = #{entity.sectionid}</if>
+        <if test="entity.uploadtime != null">,uploadtime = #{entity.uploadtime}</if>
+      </if>
+    </trim>
+  </sql>
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null and condition.id != ''">AND id = #{condition.id}</if>
+      <if test="condition.name != null and condition.name != ''">AND name = #{condition.name}</if>
+      <if test="condition.control != null">AND control = #{condition.control}</if>
+      <if test="condition.basinid != null and condition.basinid != ''">AND basinid = #{condition.basinid}</if>
+      <if test="condition.basinname != null and condition.basinname != ''">AND basinname = #{condition.basinname}</if>
+      <if test="condition.riverid != null and condition.riverid != ''">AND riverid = #{condition.riverid}</if>
+      <if test="condition.rivername != null and condition.rivername != ''">AND rivername = #{condition.rivername}</if>
+      <if test="condition.category != null and condition.category != ''">AND category = #{condition.category}</if>
+      <if test="condition.userid != null and condition.userid != ''">AND userid = #{condition.userid}</if>
+      <if test="condition.factor != null and condition.factor != ''">AND factor = #{condition.factor}</if>
+      <if test="condition.reason != null and condition.reason != ''">AND reason = #{condition.reason}</if>
+      <if test="condition.plan != null and condition.plan != ''">AND plan = #{condition.plan}</if>
+      <if test="condition.complete != null">AND complete = #{condition.complete}</if>
+      <if test="condition.state != null">AND state = #{condition.state}</if>
+      <if test="condition.quality != null">AND quality = #{condition.quality}</if>
+      <if test="condition.donetime != null">AND donetime = #{condition.donetime}</if>
+      <if test="condition.longitude != null">AND longitude = #{condition.longitude}</if>
+      <if test="condition.latitude != null">AND latitude = #{condition.latitude}</if>
+      <if test="condition.provinceid != null">AND provinceid = #{condition.provinceid}</if>
+      <if test="condition.cityid != null">AND cityid = #{condition.cityid}</if>
+      <if test="condition.countyid != null">AND countyid = #{condition.countyid}</if>
+      <if test="condition.townid != null">AND townid = #{condition.townid}</if>
+      <if test="condition.villageid != null">AND villageid = #{condition.villageid}</if>
+      <if test="condition.createuserid != null and condition.createuserid != ''">AND createuserid = #{condition.createuserid}</if>
+      <if test="condition.createtime != null">AND createtime = #{condition.createtime}</if>
+      <if test="condition.remark != null and condition.remark != ''">AND remark = #{condition.remark}</if>
+      <if test="condition.sectionid != null and condition.sectionid != ''">AND sectionid = #{condition.sectionid}</if>
+      <if test="condition.uploadtime != null ">AND uploadtime = #{condition.uploadtime}</if>
+    </if>
+  </sql>
+  <select id="getFirstBadSmallWater" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpBadSmallWater">
+    SELECT uploadtime FROM md_micro
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where cityid in ('330800000000','330700000000','331100000000')
+    </if>
+    and uploadtime != ""
+
+    ORDER BY uploadtime DESC limit 1
+  </select>
+  <select id="getUpBadSmallWater" resultType="com.xxl.job.executor.domain.UpBadSmallWater">
+    SELECT
+    mm.id AS waterID,
+    mm.NAME AS waterName,
+    CATEGORY AS waterType,
+    complete AS planEndTime,
+    reason AS mainCause,
+    plan AS governMeasures,
+    GROUP_CONCAT(su.name) AS responsibilityPerson,
+    GROUP_CONCAT(su.cellphone) AS responsibilityPersonPhone,
+    GROUP_CONCAT(su.duty) AS responsibilityPersonPosition,
+    cityid,
+    countyid,
+    mt.name AS townName,
+    mv.name AS villageName,
+    state AS isCleared,
+    longitude,
+    latitude
+    FROM
+    md_micro mm
+    JOIN (SELECT id,NAME,cellphone,duty FROM sm_user) su ON (su.id = mm.USERID)
+    JOIN (select id,name from md_adminregion) mt ON(mt.id=mm.townid)
+    JOIN (select id,name from md_adminregion) mv ON(mv.id=mm.villageid)
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where cityid in ('330800000000','330700000000','330400000000')
+    </if>
+    GROUP BY mm.id
+  </select>
+
+  <update id="updateByIdList" parameterType="java.util.Map">
+    UPDATE md_micro set uploadtime=#{nowDate} where id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </update>
+
+  <select id="getUpBadSmallWaterProgress" resultType="com.xxl.job.executor.domain.UpBadSmallWaterProgress">
+    select id AS progressID,id AS waterID,state AS clearProgressSituation , (case when state = 1 then 'true' else 'false' end) AS isReachStandard,cityid from md_micro
+    /*where CITYID in ('331100000000')*/
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where cityid in ('330800000000','330700000000','330400000000')
+      and uploadtime is not null
+    </if>
+  </select>
+</mapper>

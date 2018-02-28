@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxl.job.executor.service.first.ExeAssSystemEnduranceService">
+
+  <resultMap id="ExeAssSystemEndurance" type="com.xxl.job.executor.domain.ExeAssSystemEndurance" >
+    <result property="id" column="id" />
+    <result property="chairmanid" column="chairmanid" />
+    <result property="chairmanname" column="chairmanname" />
+    <result property="chairmanlevel" column="chairmanlevel" />
+    <result property="appraisaltype" column="appraisaltype" />
+    <result property="appraisaldate" column="appraisaldate" />
+    <result property="reachname" column="reachname" />
+    <result property="reachnum" column="reachnum" />
+    <result property="reachids" column="reachids" />
+    <result property="patrolnum" column="patrolnum" />
+    <result property="alpatrolnum" column="alpatrolnum" />
+    <result property="patrolrate" column="patrolrate" />
+    <result property="patrolscore" column="patrolscore" />
+    <result property="eventnum" column="eventnum" />
+    <result property="eventprocessing" column="eventprocessing" />
+    <result property="eventcomplete" column="eventcomplete" />
+    <result property="eventrate" column="eventrate" />
+    <result property="eventscore" column="eventscore" />
+    <result property="lognum" column="lognum" />
+    <result property="allognum" column="allognum" />
+    <result property="lograte" column="lograte" />
+    <result property="logscore" column="logscore" />
+    <result property="filenum1" column="filenum1" />
+    <result property="filedate1" column="filedate1" />
+    <result property="filescore1" column="filescore1" />
+    <result property="filenum2" column="filenum2" />
+    <result property="filedate2" column="filedate2" />
+    <result property="filescore2" column="filescore2" />
+    <result property="waterlevel" column="waterlevel" />
+    <result property="waterqualityscore" column="waterqualityscore" />
+    <result property="publicitycardnum" column="publicitycardnum" />
+    <result property="publicitydate" column="publicitydate" />
+    <result property="chairmanchangedate" column="chairmanchangedate" />
+    <result property="publicityrate" column="publicityrate" />
+    <result property="publicityscore" column="publicityscore" />
+    <result property="totalscore" column="totalscore" />
+    <result property="ranking" column="ranking" />
+    <result property="createtime" column="createtime" />
+    <result property="provinceid" column="provinceid" />
+    <result property="cityid" column="cityid" />
+    <result property="countyid" column="countyid" />
+    <result property="townid" column="townid" />
+    <result property="villageid" column="villageid" />
+
+    <result property="month" column="month" />
+    <result property="quarter" column="quarter" />
+    <result property="year" column="year" />
+    <result property="asstype" column="asstype" />
+
+  </resultMap>
+
+  <resultMap id="ExeAssSystemEnduranceVO" type="com.xxl.job.executor.vo.ExeAssSystemEnduranceVO">
+    <result property="id" column="id" />
+    <result property="chairmanid" column="chairmanid" />
+    <result property="chairmanname" column="chairmanname" />
+    <result property="chairmanlevel" column="chairmanlevel" />
+    <result property="appraisaltype" column="appraisaltype" />
+    <result property="appraisaldate" column="appraisaldate" />
+    <result property="reachname" column="reachname" />
+    <result property="reachnum" column="reachnum" />
+    <result property="reachids" column="reachids" />
+    <result property="patrolnum" column="patrolnum" />
+    <result property="alpatrolnum" column="alpatrolnum" />
+    <result property="patrolrate" column="patrolrate" />
+    <result property="patrolscore" column="patrolscore" />
+    <result property="eventnum" column="eventnum" />
+    <result property="eventprocessing" column="eventprocessing" />
+    <result property="eventcomplete" column="eventcomplete" />
+    <result property="eventrate" column="eventrate" />
+    <result property="eventscore" column="eventscore" />
+    <result property="lognum" column="lognum" />
+    <result property="allognum" column="allognum" />
+    <result property="lograte" column="lograte" />
+    <result property="logscore" column="logscore" />
+    <result property="filenum1" column="filenum1" />
+    <result property="filedate1" column="filedate1" />
+    <result property="filescore1" column="filescore1" />
+    <result property="filenum2" column="filenum2" />
+    <result property="filedate2" column="filedate2" />
+    <result property="filescore2" column="filescore2" />
+    <result property="waterlevel" column="waterlevel" />
+    <result property="waterqualityscore" column="waterqualityscore" />
+    <result property="publicitycardnum" column="publicitycardnum" />
+    <result property="publicitydate" column="publicitydate" />
+    <result property="chairmanchangedate" column="chairmanchangedate" />
+    <result property="publicityrate" column="publicityrate" />
+    <result property="publicityscore" column="publicityscore" />
+    <result property="totalscore" column="totalscore" />
+    <result property="ranking" column="ranking" />
+    <result property="createtime" column="createtime" />
+    <result property="provinceid" column="provinceid" />
+    <result property="cityid" column="cityid" />
+    <result property="countyid" column="countyid" />
+    <result property="townid" column="townid" />
+    <result property="villageid" column="villageid" />
+    <result property="month" column="month" />
+    <result property="quarter" column="quarter" />
+    <result property="year" column="year" />
+    <result property="asstype" column="asstype" />
+
+    <result property="monthorquarter" column="monthorquarter" />
+    <result property="regionid" column="regionid" />
+    <result property="pageNumber" column="pageNumber" />
+    <result property="pageSize" column="pageSize" />
+
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    t.id,
+    t.chairmanid,
+    t.chairmanname,
+    t.chairmanlevel,
+    t.appraisaltype,
+    t.appraisaldate,
+    t.reachname,
+    t.reachnum,
+    t.reachids,
+    t.patrolnum,
+    t.alpatrolnum,
+    t.patrolrate,
+    t.patrolscore,
+    t.eventnum,
+    t.eventprocessing,
+    t.eventcomplete,
+    t.eventrate,
+    t.eventscore,
+    t.lognum,
+    t.allognum,
+    t.lograte,
+    t.logscore,
+    t.filenum1,
+    t.filedate1,
+    t.filescore1,
+    t.filenum2,
+    t.filedate2,
+    t.filescore2,
+    t.waterlevel,
+    t.waterqualityscore,
+    t.publicitycardnum,
+    t.publicitydate,
+    t.chairmanchangedate,
+    t.publicityrate,
+    t.publicityscore,
+    t.totalscore,
+    t.ranking,
+    t.createtime,
+    t.provinceid,
+    t.cityid,
+    t.countyid,
+    t.townid,
+    t.villageid,
+    t.month,
+    t.quarter,
+    t.year,
+    t.asstype
+  </sql>
+
+  <select id="pageList" parameterType="java.util.HashMap" resultMap="ExeAssSystemEndurance">
+    SELECT <include refid="Base_Column_List" />
+    FROM exe_ass_system_endurance AS t
+    ORDER BY id DESC
+    LIMIT #{offset}, #{pagesize}
+  </select>
+
+  <select id="pageListCount" parameterType="java.util.HashMap" resultType="int">
+    SELECT count(1)
+    FROM exe_ass_system_endurance AS t
+  </select>
+
+  <insert id="save" parameterType="com.xxl.job.executor.domain.ExeAssSystemEndurance">
+    INSERT INTO exe_ass_system_endurance (
+      id,
+      chairmanid,
+      chairmanname,
+      chairmanlevel,
+      appraisaltype,
+      appraisaldate,
+      reachname,
+      reachnum,
+      reachids,
+      patrolnum,
+      alpatrolnum,
+      patrolrate,
+      patrolscore,
+      eventnum,
+      eventprocessing,
+      eventcomplete,
+      eventrate,
+      eventscore,
+      lognum,
+      allognum,
+      lograte,
+      logscore,
+      filenum1,
+      filedate1,
+      filescore1,
+      filenum2,
+      filedate2,
+      filescore2,
+      waterlevel,
+      waterqualityscore,
+      publicitycardnum,
+      publicitydate,
+      chairmanchangedate,
+      publicityrate,
+      publicityscore,
+      totalscore,
+      ranking,
+      createtime,
+      provinceid,
+      cityid,
+      countyid,
+      townid,
+      villageid,
+      month,
+      quarter,
+      year,
+      asstype
+    ) VALUES (
+      #{id},
+      #{chairmanid},
+      #{chairmanname},
+      #{chairmanlevel},
+      #{appraisaltype},
+      #{appraisaldate},
+      #{reachname},
+      #{reachnum},
+      #{reachids},
+      #{patrolnum},
+      #{alpatrolnum},
+      #{patrolrate},
+      #{patrolscore},
+      #{eventnum},
+      #{eventprocessing},
+      #{eventcomplete},
+      #{eventrate},
+      #{eventscore},
+      #{lognum},
+      #{allognum},
+      #{lograte},
+      #{logscore},
+      #{filenum1},
+      #{filedate1},
+      #{filescore1},
+      #{filenum2},
+      #{filedate2},
+      #{filescore2},
+      #{waterlevel},
+      #{waterqualityscore},
+      #{publicitycardnum},
+      #{publicitydate},
+      #{chairmanchangedate},
+      #{publicityrate},
+      #{publicityscore},
+      #{totalscore},
+      #{ranking},
+      #{createtime},
+      #{provinceid},
+      #{cityid},
+      #{countyid},
+      #{townid},
+      #{villageid},
+      #{month},
+      #{quarter},
+      #{year},
+      #{asstype}
+    );
+  </insert>
+
+  <select id="loadById" parameterType="java.util.HashMap" resultMap="ExeAssSystemEndurance">
+    SELECT <include refid="Base_Column_List" />
+    FROM exe_ass_system_endurance AS t
+    WHERE t.id = #{id}
+  </select>
+
+  <delete id="delete" parameterType="java.util.HashMap">
+    DELETE
+    FROM exe_ass_system_endurance
+    WHERE id = #{id}
+  </delete>
+
+  <select id="getExeAssSystemEnduranceByName" parameterType="java.util.HashMap" resultMap="ExeAssSystemEndurance">
+    SELECT <include refid="Base_Column_List" />
+    FROM exe_ass_system_endurance AS t
+    WHERE t.chairmanname = #{chairmanname}
+  </select>
+
+  <select id="findAllCount" resultType="int">
+    SELECT count(1)
+    FROM exe_ass_system_endurance
+  </select>
+
+  <select id="callProcedureByCondition" parameterType="com.xxl.job.executor.vo.ExeAssSystemEnduranceVO" statementType="CALLABLE" resultMap="ExeAssSystemEndurance">
+    CALL AM_CALCULATE_CHAIRMAN_DATA_EXE (
+      #{asstype},
+      #{year},
+      #{monthorquarter},
+      #{chairmanid},
+      #{regionid},
+      #{chairmanlevel},
+      #{chairmanname},
+      #{pageNumber},
+      #{pageSize}
+    )
+  </select>
+
+  <select id="getStatCutOffTime" resultMap="ExeAssSystemEndurance">
+    SELECT
+      MAX(`year`) AS `year`,
+      MAX(`quarter`) AS `quarter`,
+      MAX(`month`) AS `month`
+    FROM exe_ass_system_endurance
+  </select>
+
+</mapper>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.ExeAssChairmanElectronicService">
+  <resultMap id="exeAssChairmanelectronic" type="com.xxl.job.executor.domain.ExeAssChairmanElectronic">
+    <result property="id" column="id" />
+    <result property="chairmanid" column="chairmanid" />
+    <result property="chairmanname" column="chairmanname" />
+    <result property="chairmanlevel" column="chairmanlevel" />
+    <result property="basicinformationscore" column="basicinformationscore" />
+    <result property="patrolstandardinformationscore" column="patrolstandardinformationscore" />
+    <result property="patrolriverrecordscore" column="patrolriverrecordscore" />
+    <result property="validpatrolrivertrackscore" column="validpatrolrivertrackscore" />
+    <result property="additionitemscore" column="additionitemscore" />
+    <result property="eventdisposescore" column="eventdisposescore" />
+    <result property="specialscore" column="specialscore" />
+    <result property="totalscore" column="totalscore" />
+    <result property="provinceid" column="provinceid" />
+    <result property="cityid" column="cityid" />
+    <result property="countyid" column="countyid" />
+    <result property="townid" column="townid" />
+    <result property="villageid" column="villageid" />
+    <result property="assesstime" column="assesstime" />
+    <result property="createtime" column="createtime" />
+    <result property="uploadcode" column="uploadcode" />
+    <result property="uploadtime" column="uploadtime" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null and entity.id != ''">,id</if>
+      <if test="entity.chairmanid != null and entity.chairmanid != ''">,chairmanid</if>
+      <if test="entity.chairmanname != null and entity.chairmanname != ''">,chairmanname</if>
+      <if test="entity.chairmanlevel != null">,chairmanlevel</if>
+      <if test="entity.basicinformationscore != null">,basicinformationscore</if>
+      <if test="entity.patrolstandardinformationscore != null">,patrolstandardinformationscore</if>
+      <if test="entity.patrolriverrecordscore != null">,patrolriverrecordscore</if>
+      <if test="entity.validpatrolrivertrackscore != null">,validpatrolrivertrackscore</if>
+      <if test="entity.additionitemscore != null">,additionitemscore</if>
+      <if test="entity.eventdisposescore != null">,eventdisposescore</if>
+      <if test="entity.specialscore != null">,specialscore</if>
+      <if test="entity.totalscore != null">,totalscore</if>
+      <if test="entity.provinceid != null and entity.provinceid != 0">,provinceid</if>
+      <if test="entity.cityid != null and entity.cityid != 0">,cityid</if>
+      <if test="entity.countyid != null and entity.countyid != 0">,countyid</if>
+      <if test="entity.townid != null and entity.townid != 0">,townid</if>
+      <if test="entity.villageid != null and entity.villageid != 0">,villageid</if>
+      <if test="entity.assesstime != null and entity.assesstime != ''">,assesstime</if>
+      <if test="entity.createtime != null">,createtime</if>
+      <if test="entity.uploadcode != null and entity.uploadcode!=''">,uploadcode</if>
+      <if test="entity.uploadtime != null">,uploadtime</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null and entity.id != ''">,#{entity.id}</if>
+      <if test="entity.chairmanid != null and entity.chairmanid != ''">,#{entity.chairmanid}</if>
+      <if test="entity.chairmanname != null and entity.chairmanname != ''">,#{entity.chairmanname}</if>
+      <if test="entity.chairmanlevel != null">,#{entity.chairmanlevel}</if>
+      <if test="entity.basicinformationscore != null">,#{entity.basicinformationscore}</if>
+      <if test="entity.patrolstandardinformationscore != null">,#{entity.patrolstandardinformationscore}</if>
+      <if test="entity.patrolriverrecordscore != null">,#{entity.patrolriverrecordscore}</if>
+      <if test="entity.validpatrolrivertrackscore != null">,#{entity.validpatrolrivertrackscore}</if>
+      <if test="entity.additionitemscore != null">,#{entity.additionitemscore}</if>
+      <if test="entity.eventdisposescore != null">,#{entity.eventdisposescore}</if>
+      <if test="entity.specialscore != null">,#{entity.specialscore}</if>
+      <if test="entity.totalscore != null">,#{entity.totalscore}</if>
+      <if test="entity.provinceid != null and entity.provinceid != 0">,#{entity.provinceid}</if>
+      <if test="entity.cityid != null and entity.cityid != 0">,#{entity.cityid}</if>
+      <if test="entity.countyid != null and entity.countyid != 0">,#{entity.countyid}</if>
+      <if test="entity.townid != null and entity.townid != 0">,#{entity.townid}</if>
+      <if test="entity.villageid != null and entity.villageid != 0">,#{entity.villageid}</if>
+      <if test="entity.assesstime != null and entity.assesstime != ''">,#{entity.assesstime}</if>
+      <if test="entity.createtime != null">,#{entity.createtime}</if>
+      <if test="entity.uploadcode != null and entity.uploadcode!=''">,#{entity.uploadcode}</if>
+      <if test="entity.uploadtime != null">,#{entity.uploadtime}</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,chairmanid
+    ,chairmanname
+    ,chairmanlevel
+    ,basicinformationscore
+    ,patrolstandardinformationscore
+    ,patrolriverrecordscore
+    ,validpatrolrivertrackscore
+    ,additionitemscore
+    ,eventdisposescore
+    ,specialscore
+    ,totalscore
+    ,provinceid
+    ,cityid
+    ,countyid
+    ,townid
+    ,villageid
+    ,assesstime
+    ,createtime
+    ,uploadcode
+    ,uploadtime
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <if test="entity.id != null and entity.id != ''">,id = #{entity.id}</if>
+        <if test="entity.chairmanid != null and entity.chairmanid != ''">,chairmanid = #{entity.chairmanid}</if>
+        <if test="entity.chairmanname != null and entity.chairmanname != ''">,chairmanname = #{entity.chairmanname}</if>
+        <if test="entity.chairmanlevel != null">,chairmanlevel = #{entity.chairmanlevel}</if>
+        <if test="entity.basicinformationscore != null">,basicinformationscore = #{entity.basicinformationscore}</if>
+        <if test="entity.patrolstandardinformationscore != null">,patrolstandardinformationscore = #{entity.patrolstandardinformationscore}</if>
+        <if test="entity.patrolriverrecordscore != null">,patrolriverrecordscore = #{entity.patrolriverrecordscore}</if>
+        <if test="entity.validpatrolrivertrackscore != null">,validpatrolrivertrackscore = #{entity.validpatrolrivertrackscore}</if>
+        <if test="entity.additionitemscore != null">,additionitemscore = #{entity.additionitemscore}</if>
+        <if test="entity.eventdisposescore != null">,eventdisposescore = #{entity.eventdisposescore}</if>
+        <if test="entity.specialscore != null">,specialscore = #{entity.specialscore}</if>
+        <if test="entity.totalscore != null">,totalscore = #{entity.totalscore}</if>
+        <if test="entity.provinceid != null">,provinceid = #{entity.provinceid}</if>
+        <if test="entity.cityid != null">,cityid = #{entity.cityid}</if>
+        <if test="entity.countyid != null">,countyid = #{entity.countyid}</if>
+        <if test="entity.townid != null">,townid = #{entity.townid}</if>
+        <if test="entity.villageid != null">,villageid = #{entity.villageid}</if>
+        <if test="entity.assesstime != null and entity.assesstime != ''">,assesstime = #{entity.assesstime}</if>
+        <if test="entity.createtime != null">,createtime = #{entity.createtime}</if>
+        <if test="entity.uploadcode != null and entity.uploadcode">,uploadcode = #{entity.uploadcode}</if>
+        <if test="entity.uploadtime != null">,uploadtime = #{entity.uploadtime}</if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_force_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="_parameter.containsKey('entity_id')">,id = #{entity_id, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_chairmanid')">,chairmanid = #{entity_chairmanid, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_chairmanname')">,chairmanname = #{entity_chairmanname, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_chairmanlevel')">,chairmanlevel = #{entity_chairmanlevel, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_basicinformationscore')">,basicinformationscore = #{entity_basicinformationscore, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolstandardinformationscore')">,patrolstandardinformationscore = #{entity_patrolstandardinformationscore, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolriverrecordscore')">,patrolriverrecordscore = #{entity_patrolriverrecordscore, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_validpatrolrivertrackscore')">,validpatrolrivertrackscore = #{entity_validpatrolrivertrackscore, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_additionitemscore')">,additionitemscore = #{entity_additionitemscore, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_eventdisposescore')">,eventdisposescore = #{entity_eventdisposescore, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_specialscore')">,specialscore = #{entity_specialscore, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_totalscore')">,totalscore = #{entity_totalscore, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_provinceid')">,provinceid = #{entity_provinceid, jdbcType=BIGINT}</if>
+      <if test="_parameter.containsKey('entity_cityid')">,cityid = #{entity_cityid, jdbcType=BIGINT}</if>
+      <if test="_parameter.containsKey('entity_countyid')">,countyid = #{entity_countyid, jdbcType=BIGINT}</if>
+      <if test="_parameter.containsKey('entity_townid')">,townid = #{entity_townid, jdbcType=BIGINT}</if>
+      <if test="_parameter.containsKey('entity_villageid')">,villageid = #{entity_villageid, jdbcType=BIGINT}</if>
+      <if test="_parameter.containsKey('entity_assesstime')">,assesstime = #{entity_assesstime, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_createtime')">,createtime = #{entity_createtime, jdbcType=DATETIME}</if>
+      <if test="_parameter.containsKey('entity_uploadcode')">,uploadcode = #{entity_uploadcode, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_uploadtime')">,uploadcode = #{entity_uploadtime, jdbcType=DATETIME}</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null and condition.id != ''">AND id = #{condition.id}</if>
+      <if test="condition.chairmanid != null and condition.chairmanid != ''">AND chairmanid = #{condition.chairmanid}</if>
+      <if test="condition.chairmanname != null and condition.chairmanname != ''">AND chairmanname = #{condition.chairmanname}</if>
+      <if test="condition.chairmanlevel != null">AND chairmanlevel = #{condition.chairmanlevel}</if>
+      <if test="condition.basicinformationscore != null">AND basicinformationscore = #{condition.basicinformationscore}</if>
+      <if test="condition.patrolstandardinformationscore != null">AND patrolstandardinformationscore = #{condition.patrolstandardinformationscore}</if>
+      <if test="condition.patrolriverrecordscore != null">AND patrolriverrecordscore = #{condition.patrolriverrecordscore}</if>
+      <if test="condition.validpatrolrivertrackscore != null">AND validpatrolrivertrackscore = #{condition.validpatrolrivertrackscore}</if>
+      <if test="condition.additionitemscore != null">AND additionitemscore = #{condition.additionitemscore}</if>
+      <if test="condition.eventdisposescore != null">AND eventdisposescore = #{condition.eventdisposescore}</if>
+      <if test="condition.specialscore != null">AND specialscore = #{condition.specialscore}</if>
+      <if test="condition.totalscore != null">AND totalscore = #{condition.totalscore}</if>
+      <if test="condition.provinceid != null">AND provinceid = #{condition.provinceid}</if>
+      <if test="condition.cityid != null">AND cityid = #{condition.cityid}</if>
+      <if test="condition.countyid != null">AND countyid = #{condition.countyid}</if>
+      <if test="condition.townid != null">AND townid = #{condition.townid}</if>
+      <if test="condition.villageid != null">AND villageid = #{condition.villageid}</if>
+      <if test="condition.assesstime != null and condition.assesstime != ''">AND assesstime = #{condition.assesstime}</if>
+      <if test="condition.createtime != null">AND createtime = #{condition.createtime}</if>
+      <if test="condition.uploadcode != null and condition.uploadcode!=''">AND uploadcode = #{condition.uploadcode}</if>
+      <if test="condition.uploadtime != null">AND uploadtime = #{condition.uploadtime}</if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.String" order="BEFORE">
+      SELECT REPLACE(UUID(),'-','')
+    </selectKey>
+    INSERT INTO exe_ass_chairmanelectronic (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="exeAssChairmanelectronic">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM exe_ass_chairmanelectronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultMap="exeAssChairmanelectronic">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM exe_ass_chairmanelectronic
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="exeAssChairmanelectronic">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM exe_ass_chairmanelectronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="findByIdList" parameterType="java.util.Map" resultMap="exeAssChairmanelectronic">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM exe_ass_chairmanelectronic
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM exe_ass_chairmanelectronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM exe_ass_chairmanelectronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE exe_ass_chairmanelectronic
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE exe_ass_chairmanelectronic
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <update id="updateByIdList" parameterType="java.util.Map">
+    UPDATE exe_ass_chairmanelectronic
+    <include refid="sql_update_set" />
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </update>
+
+  <update id="forceUpdate" parameterType="java.util.Map">
+    UPDATE exe_ass_chairmanelectronic
+    <include refid="sql_force_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="forceUpdateById" parameterType="java.util.Map">
+    UPDATE exe_ass_chairmanelectronic
+    <include refid="sql_force_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <update id="forceUpdateByIdList" parameterType="java.util.Map">
+    UPDATE exe_ass_chairmanelectronic
+    <include refid="sql_force_update_set" />
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM exe_ass_chairmanelectronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM exe_ass_chairmanelectronic
+    WHERE id = #{id}
+  </delete>
+
+  <delete id="removeByIdList" parameterType="java.util.Map">
+    DELETE FROM exe_ass_chairmanelectronic
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </delete>
+
+
+  <delete id="deleteByAssessTime" parameterType="String">
+    DELETE FROM `exe_ass_chairmanelectronic` WHERE ASSESSTIME = #{assessTime};
+  </delete>
+
+  <select id="getPurposeCheck" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.ExeAssChairmanElectronic">
+    select * from exe_ass_chairmanelectronic where assessTime = #{assessTime}
+  </select>
+  <update id="updateUploadByIdList" parameterType="java.util.Map">
+    update exe_ass_chairmanelectronic set uploadtime = #{uploadtime} where id in
+    <foreach collection="idList" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </update>
+</mapper>

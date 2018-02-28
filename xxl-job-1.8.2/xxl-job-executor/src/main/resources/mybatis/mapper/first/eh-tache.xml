@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.EhTacheService">
+    <sql id="sql_update_set">
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="entity != null">
+                <if test="entity.id != null">,id = #{entity.id}</if>
+                <if test="entity.recver != null">,recver = #{entity.recver}</if>
+                <if test="entity.eventstatus != null and entity.eventstatus != ''">,eventstatus =
+                    #{entity.eventstatus}
+                </if>
+                <if test="entity.eventid != null">,eventid = #{entity.eventid}</if>
+                <if test="entity.resultdesc != null and entity.resultdesc != ''">,resultdesc = #{entity.resultdesc}</if>
+                <if test="entity.userid != null and entity.userid != ''">,userid = #{entity.userid}</if>
+                <if test="entity.userdept != null and entity.userdept != ''">,userdept = #{entity.userdept}</if>
+                <if test="entity.createtime != null">,createtime = #{entity.createtime}</if>
+                <if test="entity.begintime != null">,begintime = #{entity.begintime}</if>
+                <if test="entity.endtime != null">,endtime = #{entity.endtime}</if>
+                <if test="entity.finaltime != null">,finaltime = #{entity.finaltime}
+                    ,processingtime =  ROUND((UNIX_TIMESTAMP(#{entity.finaltime})-UNIX_TIMESTAMP(createtime))/(60*60),2)
+                </if>
+                <if test="entity.status != null and entity.status != ''">,status = #{entity.status}</if>
+                <if test="entity.handler != null and entity.handler != ''">,handler = #{entity.handler}</if>
+                <if test="entity.handlerdept != null and entity.handlerdept != ''">,handlerdept =
+                    #{entity.handlerdept}
+                </if>
+                <if test="entity.issupervise != null and entity.issupervise != ''">,issupervise =
+                    #{entity.issupervise}
+                </if>
+                <if test="entity.username != null and entity.username != ''">,username = #{entity.username}</if>
+                <if test="entity.uploadtime != null">,uploadtime = #{entity.uploadtime}</if>
+                <if test="entity.handlername != null and entity.handlername != ''">,handlername =
+                    #{entity.handlername}
+                </if>
+            </if>
+        </trim>
+    </sql>
+    <sql id="sql_condition">
+        <if test="condition != null">
+            <if test="condition.id != null">AND id = #{condition.id}</if>
+            <if test="condition.recver != null">AND recver = #{condition.recver}</if>
+            <if test="condition.eventstatus != null and condition.eventstatus != ''">AND eventstatus =
+                #{condition.eventstatus}
+            </if>
+            <if test="condition.eventid != null">AND eventid = #{condition.eventid}</if>
+            <if test="condition.resultdesc != null and condition.resultdesc != ''">AND resultdesc =
+                #{condition.resultdesc}
+            </if>
+            <if test="condition.userid != null and condition.userid != ''">AND userid = #{condition.userid}</if>
+            <if test="condition.userdept != null and condition.userdept != ''">AND userdept = #{condition.userdept}</if>
+            <if test="condition.createtime != null">AND createtime = #{condition.createtime}</if>
+            <if test="condition.begintime != null">AND begintime = #{condition.begintime}</if>
+            <if test="condition.endtime != null">AND endtime = #{condition.endtime}</if>
+            <if test="condition.finaltime != null">AND finaltime = #{condition.finaltime}</if>
+            <if test="condition.status != null and condition.status != ''">AND status = #{condition.status}</if>
+            <if test="condition.handler != null and condition.handler != ''">AND handler = #{condition.handler}</if>
+            <if test="condition.handlerdept != null and condition.handlerdept != ''">AND handlerdept =
+                #{condition.handlerdept}
+            </if>
+            <if test="condition.issupervise != null and condition.issupervise != ''">AND issupervise =
+                #{condition.issupervise}
+            </if>
+            <if test="condition.username != null and condition.username != ''">AND username = #{condition.username}</if>
+            <if test="condition.uploadtime != null">AND uploadtime = #{condition.uploadtime}</if>
+            <if test="condition.handlername != null and condition.handlername != ''">AND handlername =
+                #{condition.handlername}
+            </if>
+        </if>
+    </sql>
+    <select id="getUpProblemHandle" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpProblemHandle">
+        SELECT uploadtime FROM eh_tache et join (select id from eh_event
+        <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+            <if test="regionLevel==2">where eventbelongcityid=#{regionId}</if>
+            <if test="regionLevel==3">where eventbelongcountyid=#{regionId}</if>
+            <if test="regionLevel==4">where eventbelongtownid=#{regionId}</if>
+            <if test="regionLevel==5">where eventbelongvillageid=#{regionId}</if>
+        </if>
+        <if test="regionId==null or regionId==''">
+            where eventbelongcityid in ('330800000000','330700000000','330400000000')
+        </if>
+        )ee on(ee.id=et.eventid)
+        WHERE status = 'F'
+        ORDER BY uploadtime DESC limit 1
+    </select>
+
+    <select id="getUpProblemHandleList" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpProblemHandle">
+        SELECT
+        et.id AS handleID,
+        eventid AS problemID,
+        HANDLER AS handlerContact,
+        handlerdept AS handlerOrg,
+        finaltime AS handleTime,
+        resultdesc AS description,
+        status,
+        eh.eventbelongcityid,
+        begintime
+        FROM
+        eh_tache et
+        JOIN (
+        SELECT
+        id,eventbelongcityid
+        FROM
+        eh_event
+        <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+            <if test="regionLevel==2">where eventbelongcityid=#{regionId}</if>
+            <if test="regionLevel==3">where eventbelongcountyid=#{regionId}</if>
+            <if test="regionLevel==4">where eventbelongtownid=#{regionId}</if>
+            <if test="regionLevel==5">where eventbelongvillageid=#{regionId}</if>
+        </if>
+        <if test="regionId==null or regionId==''">
+            where eventbelongcityid in ('330800000000','330700000000','330400000000')and uploadtime is not null
+        </if>
+        ) eh ON (eh.id = et.eventid)
+        where  et.status = 'F' and uploadtime is null
+        <!--<if test="lastuploadtime!=null">and (finaltime>#{lastuploadtime} or begintime >#{lastuploadtime})</if>-->
+    </select>
+
+    <update id="updateByIdList" parameterType="java.util.Map">
+        UPDATE eh_tache set uploadtime=#{uploadtime} where id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        <include refid="sql_condition" />
+    </update>
+
+    <select id="getZhuJiTache" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.zhuji.UpEventHandler">
+        SELECT
+        et.id,
+        ee.srcid as problemid,
+        su.srcid as handleuserid,
+        finaltime as handletime,
+        resultdesc as result
+    FROM
+        eh_tache et
+    JOIN(select id,srcid from eh_event where srcid is not null)ee ON (ee.id=et.eventid)
+JOIN(select id ,srcid from sm_user where srcid is not null) su ON (et.userid = su.id)
+    WHERE
+        uploadtime IS NULL
+    AND STATUS = 'F'
+    GROUP BY
+        eventid
+    ORDER BY
+        createtime DESC
+    </select>
+
+    <update id="update" parameterType="java.util.Map">
+      update eh_tache set uploadtime = #{uploadtime},srcid = #{srcid} where id = #{id}
+    </update>
+</mapper>

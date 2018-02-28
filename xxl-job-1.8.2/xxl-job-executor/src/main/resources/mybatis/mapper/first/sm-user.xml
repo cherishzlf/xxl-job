@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.SmUserService">
+  <select id="getFirstMaster" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UploadRiverMaster">
+    SELECT uploadtime FROM sm_user
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==1">where provinceid=#{regionId}</if>
+      <if test="regionLevel==2">where cityid=#{regionId}</if>
+      <if test="regionLevel==3">where countyid=#{regionId}</if>
+      <if test="regionLevel==4">where townid=#{regionId}</if>
+      <if test="regionLevel==5">where villageid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      where cityid in ('3308000000000','330700000000','330400000000')
+    </if>
+    and uploadtime != ""
+    ORDER BY uploadtime DESC limit 1
+  </select>
+
+  <select id="getUpMasterList" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UploadRiverMaster">
+SELECT
+	id as masterID,
+	NAME as masterName,
+	duty as masterPosition,
+	  CELLPHONE as masterMobile,
+	mr.chairmanlevel as chairmanLevel,
+	mr.contact_department as contactUnit,
+	mr.unit_cellphone as contactNumber,
+	mr.chairman_unit as organizationName,
+	GROUP_CONCAT(mr.REACHID) as riverID,
+    cityid
+FROM
+	  sm_user su
+JOIN (
+	SELECT
+		USERID
+	FROM
+		sm_userrole
+	WHERE
+		ROLEID = '262'
+) sr ON (su.ID = sr.USERID)
+ JOIN (
+	  select mrc.CHAIRMANID,
+	  mrc.REACHID,
+	  mrc.CHAIRMANLEVEL,
+	  mrc.contact_department,
+	  mrc.chairman_unit,
+	  mrc.unit_cellphone
+	  from md_reachchairman mrc where reachlevel = chairmanlevel
+) mr ON (su.id = mr.CHAIRMANID)
+	  <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+		  <if test="regionLevel==1">where provinceid=#{regionId}</if>
+		  <if test="regionLevel==2">where cityid=#{regionId}</if>
+		  <if test="regionLevel==3">where countyid=#{regionId}</if>
+		  <if test="regionLevel==4">where townid=#{regionId}</if>
+		  <if test="regionLevel==5">where villageid=#{regionId}</if>
+	  </if>
+	  <if test="regionId==null or regionId==''">
+		  where cityid in ('330800000000','330700000000','330400000000')
+	  </if>
+	  <if test="uploadtime!=null ">AND (createtime>#{uploadtime} or modifytime>#{uploadtime}) </if>
+	  GROUP BY su.ID
+  </select>
+
+	<select id="updateUploadtime" parameterType="java.util.Map" >
+		UPDATE sm_user set uploadtime=#{uploadtime} where id IN
+		<foreach collection="idList" item="id" separator="," open="(" close=")">
+			#{id}
+		</foreach>
+
+	</select>
+
+
+	<select id="getFirstUser" resultType="com.xxl.job.executor.domain.zhuji.UpUser">
+		SELECT uploadtime as uploadTime FROM sm_user where countyid='330681000000'  and uploadtime is not null
+		ORDER BY uploadtime DESC limit 1
+	</select>
+
+	<select id="getUpUser" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.zhuji.UpUser" >
+			SELECT
+			su.id as userId,
+			su.srcid ,
+			su.name as objectName,
+			su.countyid,
+			su.townid,
+			su.villageid,
+			su.duty,
+			su.CELLPHONE as phone,
+			mr.CHAIRMANLEVEL as type,
+			mr.chairman_unit as unit
+			FROM
+			sm_user su
+			JOIN (
+			SELECT
+			USERID
+			FROM
+			sm_userrole
+			WHERE
+			ROLEID = '262'
+			) sr ON (su.ID = sr.USERID)
+			 JOIN (
+			SELECT
+			CHAIRMANID,
+			REACHID,
+			CHAIRMANLEVEL,
+			contact_department,
+			chairman_unit,
+			unit_cellphone
+			FROM
+			md_reachchairman
+			WHERE
+			REACHLEVEL = CHAIRMANLEVEL
+			) mr ON (su.id = mr.CHAIRMANID)
+			where su.countyid='330681000000'
+		<if test="uploadtime!=null ">AND (createtime>#{uploadtime} or modifytime>#{uploadtime})</if>
+		GROUP BY su.ID
+	</select>
+
+	<update id="update" parameterType="java.util.Map">
+		update sm_user set srcid=#{srcid},uploadtime = #{uploadtime} where id=#{id}
+	</update>
+
+	<select id="getUserByRegion" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UploadRiverMaster">
+		select id as masterID,NAME as masterName from sm_user
+		where countyid in ('330411000000','330485000000')
+	</select>
+	<select id="getUpRiverMinisterList" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UploadRiverMinister">
+		SELECT
+		id as ministerID ,
+		 name as ministerName,
+		 duty as ministerPosition,
+		 cellphone as ministerPhone,
+		 provinceid as provinceId,
+		 cityid as cityId,
+		 countyid as countyId,
+		 townid as townId,
+		 villageid as villageId
+		FROM
+			sm_user user
+		JOIN (
+			SELECT
+				userid
+			FROM
+				sm_userrole
+			WHERE
+				roleid IN (
+					SELECT
+						id
+					FROM
+						sm_role
+					WHERE
+						name = 'ZHZ'
+				)
+		) role ON (user .id = role.userid)
+		where user.status = 1
+		<if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+			<if test="regionLevel==1">and provinceid=#{regionId}</if>
+			<if test="regionLevel==2">and cityid=#{regionId}</if>
+			<if test="regionLevel==3">and countyid=#{regionId}</if>
+			<if test="regionLevel==4">and townid=#{regionId}</if>
+			<if test="regionLevel==5">and villageid=#{regionId}</if>
+		</if>
+		<if test="regionId==null or regionId==''">
+			and cityid in ('330800000000','330700000000','330400000000')
+		</if>
+	</select>
+</mapper>

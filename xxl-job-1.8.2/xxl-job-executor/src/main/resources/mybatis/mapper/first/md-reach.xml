@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.MdReachService">
+  <resultMap id="Mdreach" type="com.xxl.job.executor.domain.MdReach">
+    <result property="id" column="id"/>
+    <result property="overview" column="overview"/>
+  </resultMap>
+  <sql id="sql_column_list">
+    id
+    ,recver
+    ,code
+    ,name
+    ,length
+    ,overview
+    ,parents
+    ,startpoint
+    ,langiofstartpoint
+    ,latiofstartpoint
+    ,endpoint
+    ,langiofendpoint
+    ,latiofendpoint
+    ,basinname
+    ,riverid
+    ,rivername
+    ,rivertype
+    ,provinceid
+    ,cityid
+    ,countyid
+    ,townid
+    ,villageid
+    ,flowthrough
+    ,riverful
+    ,relatewithsection
+    ,reachlevel
+    ,waterlevel
+    ,silty
+    ,otherproblems
+    ,remark
+    ,sortorder
+    ,status
+    ,showlevel
+    ,createuserid
+    ,createtime
+    ,modifyuserid
+    ,modifytime
+    ,audituserid
+    ,audittime
+    ,auditsuggestion
+    ,effecttime
+    ,centerlng
+    ,centerlat
+    ,reachstatus
+    ,governtime
+    ,adminregionid
+    ,chairman
+    ,widthofbuffer
+    ,filepathofreach
+    ,filepathofpolicy
+    ,linepoints
+    ,chairmanid
+    ,mainbody
+    ,cn
+    ,alias
+    ,average_width
+    ,river_orientation
+    ,locate_mountainsOrisland
+    ,uploadTime
+    ,src
+    ,srcid
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null and condition.id != ''">AND md_reach.id = #{condition.id}</if>
+      <if test="condition.recver != null">AND md_reach.recver = #{condition.recver}</if>
+      <if test="condition.code != null and condition.code != ''">AND md_reach.code = #{condition.code}</if>
+      <if test="condition.name != null and condition.name != ''">AND md_reach.name LIKE CONCAT_ws('','%',#{condition.name}, '%')</if>
+      <if test="condition.length != null">AND length = #{condition.length}</if>
+      <if test="condition.overview != null and condition.overview != ''">AND overview = #{condition.overview}</if>
+      <if test="condition.parents != null and condition.parents != ''">AND md_reach.parents like concat_ws('','%',#{condition.parents},'|','%')</if>
+      <if test="condition.startPoint != null and condition.startPoint != ''">AND md_reach.startPoint = #{condition.startPoint}</if>
+      <if test="condition.langiofStartPoint != null">AND md_reach.langiofStartPoint = #{condition.langiofStartPoint}</if>
+      <if test="condition.latiofStartPoint != null">AND md_reach.latiofStartPoint = #{condition.latiofStartPoint}</if>
+      <if test="condition.endPoint != null and condition.endPoint != ''">AND md_reach.endPoint = #{condition.endPoint}</if>
+      <if test="condition.langiofEndPoint != null">AND md_reach.langiofEndPoint = #{condition.langiofEndPoint}</if>
+      <if test="condition.latiofEndPoint != null">AND md_reach.latiofEndPoint = #{condition.latiofEndPoint}</if>
+      <if test="condition.basinName != null and condition.basinName != ''">AND md_reach.basinName = #{condition.basinName}</if>
+      <if test="condition.riverId != null">AND md_reach.riverId = #{condition.riverId}</if>
+      <if test="condition.riverName != null and condition.riverName != ''">AND md_reach.riverName = #{condition.riverName}</if>
+      <if test="condition.riverType != null">AND md_reach.riverType = #{condition.riverType}</if>
+      <if test="condition.provinceId != null">AND md_reach.provinceId = #{condition.provinceId}</if>
+      <if test="condition.cityId != null">AND md_reach.cityId = #{condition.cityId}</if>
+      <if test="condition.countyId != null">AND md_reach.countyId = #{condition.countyId}</if>
+      <if test="condition.townId != null">AND md_reach.townId = #{condition.townId}</if>
+      <if test="condition.villageId != null">AND md_reach.villageId = #{condition.villageId}</if>
+      <if test="condition.flowThrough != null and condition.flowThrough != ''">AND md_reach.flowThrough = #{condition.flowThrough}</if>
+      <if test="condition.riverFul != null">AND md_reach.riverFul = #{condition.riverFul}</if>
+      <if test="condition.relateWithSection != null">AND md_reach.relateWithSection = #{condition.relateWithSection}</if>
+      <if test="condition.reachLevel != null">AND md_reach.reachLevel = #{condition.reachLevel}</if>
+      <if test="condition.waterLevel != null">AND md_reach.waterLevel = #{condition.waterLevel}</if>
+      <if test="condition.silty != null">AND md_reach.silty = #{condition.silty}</if>
+      <if test="condition.otherProblems != null and condition.otherProblems != ''">AND md_reach.otherProblems = #{condition.otherProblems}</if>
+      <if test="condition.remark != null and condition.remark != ''">AND md_reach.remark = #{condition.remark}</if>
+      <if test="condition.sortOrder != null">AND md_reach.sortOrder = #{condition.sortOrder}</if>
+      <if test="condition.status != null">AND md_reach.status = #{condition.status}</if>
+      <if test="condition.showLevel != null">AND md_reach.showLevel = #{condition.showLevel}</if>
+      <if test="condition.createUserId != null">AND md_reach.createUserId = #{condition.createUserId}</if>
+      <if test="condition.createTime != null">AND md_reach.createTime = #{condition.createTime}</if>
+      <if test="condition.modifyUserId != null">AND md_reach.modifyUserId = #{condition.modifyUserId}</if>
+      <if test="condition.modifyTime != null">AND md_reach.modifyTime = #{condition.modifyTime}</if>
+      <if test="condition.auditUserId != null">AND md_reach.auditUserId = #{condition.auditUserId}</if>
+      <if test="condition.auditTime != null">AND md_reach.auditTime = #{condition.auditTime}</if>
+      <if test="condition.auditSuggestion != null and condition.auditSuggestion != ''">AND md_reach.auditSuggestion = #{condition.auditSuggestion}</if>
+      <if test="condition.effectTime != null">AND md_reach.effectTime = #{condition.effectTime}</if>
+      <if test="condition.centerLng != null">AND md_reach.centerLng = #{condition.centerLng}</if>
+      <if test="condition.centerLat != null">AND md_reach.centerLat = #{condition.centerLat}</if>
+      <if test="condition.reachStatus != null">AND md_reach.reachStatus = #{condition.reachStatus}</if>
+      <if test="condition.governTime != null">AND md_reach.governTime = #{condition.governTime}</if>
+      <if test="condition.adminregionId != null">AND md_reach.adminregionId = #{condition.adminregionId}</if>
+      <if test="condition.chairman != null">AND md_reach.chairman = #{condition.chairman}</if>
+      <if test="condition.widthOfBuffer != null">AND md_reach.widthOfBuffer = #{condition.widthOfBuffer}</if>
+      <if test="condition.filePathOfReach != null and condition.filePathOfReach != ''">AND md_reach.filePathOfReach = #{condition.filePathOfReach}</if>
+      <if test="condition.filePathOfPolicy != null and condition.filePathOfPolicy != ''">AND md_reach.filePathOfPolicy = #{condition.filePathOfPolicy}</if>
+      <if test="condition.linePoints != null and condition.linePoints != ''">AND md_reach.linePoints = #{condition.linePoints}</if>
+      <if test="condition.mainBody != null and condition.mainBody != ''">AND md_reach.mainBody = #{condition.mainBody}</if>
+      <if test="condition.uploadtime != null">AND md_reach.uploadtime = #{condition.uploadtime}</if>
+    </if>
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <if test="entity.id != null">,id = #{entity.id}</if>
+        ,recver = UNIX_TIMESTAMP(NOW())
+        <if test="entity.code != null and entity.code != ''">,code = #{entity.code}</if>
+        <if test="entity.name != null and entity.name != ''">,name = #{entity.name}</if>
+        <if test="entity.length != null">,length = #{entity.length}</if>
+        <if test="entity.overview != null and entity.overview != ''">,overview = #{entity.overview}</if>
+        <if test="entity.parents != null and entity.parents != ''">,parents = #{entity.parents}</if>
+        <if test="entity.startpoint != null and entity.startpoint != ''">,startpoint = #{entity.startpoint}</if>
+        <if test="entity.langiofstartpoint != null">,langiofstartpoint = #{entity.langiofstartpoint}</if>
+        <if test="entity.latiofstartpoint != null">,latiofstartpoint = #{entity.latiofstartpoint}</if>
+        <if test="entity.endpoint != null and entity.endpoint != ''">,endpoint = #{entity.endpoint}</if>
+        <if test="entity.langiofendpoint != null">,langiofendpoint = #{entity.langiofendpoint}</if>
+        <if test="entity.latiofendpoint != null">,latiofendpoint = #{entity.latiofendpoint}</if>
+        <if test="entity.basinname != null and entity.basinname != ''">,basinname = #{entity.basinname}</if>
+        <if test="entity.riverid != null">,riverid = #{entity.riverid}</if>
+        <if test="entity.rivername != null and entity.rivername != ''">,rivername = #{entity.rivername}</if>
+        <if test="entity.rivertype != null">,rivertype = #{entity.rivertype}</if>
+        <if test="entity.provinceid != null">,provinceid = #{entity.provinceid}</if>
+        <if test="entity.cityid != null">,cityid = #{entity.cityid}</if>
+        <if test="entity.countyid != null">,countyid = #{entity.countyid}</if>
+        <if test="entity.townid != null">,townid = #{entity.townid}</if>
+        <if test="entity.villageid != null">,villageid = #{entity.villageid}</if>
+        <if test="entity.flowthrough != null and entity.flowthrough != ''">,flowthrough =
+          #{entity.flowthrough}
+        </if>
+        <if test="entity.riverful != null">,riverful = #{entity.riverful}</if>
+        <if test="entity.relatewithsection != null">,relatewithsection = #{entity.relatewithsection}</if>
+        <if test="entity.reachlevel != null">,reachlevel = #{entity.reachlevel}</if>
+        <if test="entity.waterlevel != null">,waterlevel = #{entity.waterlevel}</if>
+        <if test="entity.silty != null">,silty = #{entity.silty}</if>
+        <if test="entity.otherproblems != null and entity.otherproblems != ''">,otherproblems =
+          #{entity.otherproblems}
+        </if>
+        <if test="entity.remark != null and entity.remark != ''">,remark = #{entity.remark}</if>
+        <if test="entity.sortorder != null">,sortorder = #{entity.sortorder}</if>
+        <if test="entity.status != null">,status = #{entity.status}</if>
+        <if test="entity.showlevel != null">,showlevel = #{entity.showlevel}</if>
+        <if test="entity.createuserid != null">,createuserid = #{entity.createuserid}</if>
+        ,createtime = now()
+        <if test="entity.modifyuserid != null">,modifyuserid = #{entity.modifyuserid}</if>
+        <if test="entity.modifytime != null">,modifytime = #{entity.modifytime}</if>
+        <if test="entity.audituserid != null">,audituserid = #{entity.audituserid}</if>
+        <if test="entity.audittime != null">,audittime = now()</if>
+        <if test="entity.auditsuggestion != null and entity.auditsuggestion != ''">,auditsuggestion =
+          #{entity.auditsuggestion}
+        </if>
+        <if test="entity.effecttime != null">,effecttime = #{entity.effecttime}</if>
+        <if test="entity.centerlng != null">,centerlng = #{entity.centerlng}</if>
+        <if test="entity.centerlat != null">,centerlat = #{entity.centerlat}</if>
+        <if test="entity.reachstatus != null">,reachstatus = #{entity.reachstatus}</if>
+        <if test="entity.governtime != null">,governtime = #{entity.governtime}</if>
+        <if test="entity.adminregionid != null">,adminregionid = #{entity.adminregionid}</if>
+        <!--         <if test="entity.chairman != null">,chairman = #{entity.chairman}</if> -->
+        <if test="entity.widthofbuffer != null">,widthofbuffer = #{entity.widthofbuffer}</if>
+        <if test="entity.filepathofreach != null and entity.filepathofreach != ''">,filepathofreach =
+          #{entity.filepathofreach}
+        </if>
+        <if test="entity.filepathofpolicy != null and entity.filepathofpolicy != ''">,filepathofpolicy =
+          #{entity.filepathofpolicy}
+        </if>
+        <if test="entity.linepoints != null and entity.linepoints != ''">,linepoints = #{entity.linepoints}</if>
+        <!--          <if test="entity.chairmanid != null">,chairmanid = #{entity.chairmanid}</if> -->
+        <if test="entity.mainbody != null and entity.mainbody != ''">,mainbody = #{entity.mainbody}</if>
+        <if test="entity.cn != null">,cn = #{entity.cn}</if>
+        <if test="entity.uploadtime != null">,uploadtime = #{entity.uploadtime}</if>
+      </if>
+    </trim>
+  </sql>
+  <sql id="sql_pagination_end">
+   limit ${startRow-1},${endRow-startRow+1}
+  </sql>
+
+  <select id="get" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdReach">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_reach
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdReach">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_reach
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdReach">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_reach
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="findByIdList" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdReach">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_reach
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(*) FROM md_reach
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="listMdReachByCondition" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdReach">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_reach
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+  <select id="getFirstReach" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpReach">
+    SELECT uploadtime FROM md_reach WHERE uploadtime is not null
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==2">and cityid=#{regionId}</if>
+      <if test="regionLevel==3">and countyid=#{regionId}</if>
+      <if test="regionLevel==4">and townid=#{regionId}</if>
+      <if test="regionLevel==5">and villageid=#{regionId}</if>
+      <if test="regionLevel==1">and provinceid=#{regionId}</if>
+    </if>
+    ORDER BY uploadtime DESC limit 1
+  </select>
+
+  <select id="getUpReachList" resultType="com.xxl.job.executor.domain.UpReach">
+    SELECT
+    rh.id as riverID,
+    NAME as riverName,
+    reachlevel,
+    startpoint,
+    endpoint,
+    length,
+    provinceid,
+    cityid,
+    countyid,
+    townid,
+    villageid,
+    alias,
+    parents,
+    rh.BASINNAME as basinCode
+    FROM
+    md_reach rh
+    where reachlevel>1 and NAME not like '%直管%'
+    and NAME not like '%管段%'
+    and rh.status = 1
+    <if test="regionId!=null and regionId!='' and regionLevel>0 ">
+      <if test="regionLevel==2">and cityid=#{regionId}</if>
+      <if test="regionLevel==3">and countyid=#{regionId}</if>
+      <if test="regionLevel==4">and townid=#{regionId}</if>
+      <if test="regionLevel==5">and villageid=#{regionId}</if>
+      <if test="regionLevel==1">and provinceid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+      and cityid in ('330800000000','330700000000','330400000000')
+    </if>
+    /*and rh.reachlevel = 2*/
+    <if test="uploadtime!=null ">AND (createtime>#{uploadtime} or modifytime>#{uploadtime})</if>
+    order by reachlevel
+  </select>
+
+  <update id="updateByIdList" parameterType="java.util.Map">
+    UPDATE md_reach set uploadtime=#{uploadtime} where id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </update>
+
+
+  <select id="getFirstZhujiReach" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.zhuji.UploadReach">
+    SELECT uploadtime FROM md_reach WHERE uploadtime != ""
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+      <if test="regionLevel==2">and cityid=#{regionId}</if>
+      <if test="regionLevel==3">and countyid=#{regionId}</if>
+      <if test="regionLevel==4">and townid=#{regionId}</if>
+      <if test="regionLevel==5">and villageid=#{regionId}</if>
+      <if test="regionLevel==1">and provinceid=#{regionId}</if>
+    </if>
+    ORDER BY uploadtime DESC limit 1
+  </select>
+
+  <select id="getZhuJiReach" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.zhuji.UploadReach">
+    SELECT
+    mr.id as riverid,
+    mr.NAME as rivername,
+    mr.srcid,
+    /*mr.alias as riveralias,*/
+    /*mr.CODE as riverno,*/
+    mr.length,
+    mr.startpoint as origin,
+    mr.endpoint,
+    mmr.srcid as userid,
+    mmr.reachlevel as reachLevel,
+    mr.countyid,
+    mr.townid,
+    mr.villageid
+    FROM
+    md_reach mr
+    JOIN (
+    SELECT
+    mmmr.reachid,
+    su.srcid,
+    mmmr.reachlevel
+    FROM
+    md_reachchairman mmmr
+    JOIN (SELECT id,srcid FROM sm_user) su ON (su.id = mmmr.chairmanid)
+    where reachlevel=chairmanlevel and reachlevel>2
+    )mmr on (mmr.reachid=mr.id)
+    and mr.name not like '%直管%'
+    and mr.name not like '%管段%'
+    <if test="uploadtime!=null ">AND (createtime>#{uploadtime} or modifytime>#{uploadtime})</if>
+    and COUNTYID = '330681000000'
+    order by riverid
+
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    update md_reach set srcid=#{srcid},uploadtime = #{uploadtime} where id=#{id}
+  </update>
+
+  <select id="getinvented" parameterType="java.util.Map"  resultType="java.lang.String">
+    select overview from md_reach where id = #{id} limit 1
+  </select>
+</mapper>

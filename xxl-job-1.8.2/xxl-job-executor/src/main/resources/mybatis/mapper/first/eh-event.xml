@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.EhEventService">
+
+    <sql id="sql_column_list">
+        id
+        ,recver
+        ,serialNo
+        ,type
+        ,eventLevel
+        ,content
+        ,eventResource
+        ,status
+        ,createTime
+        ,address
+        ,longitude
+        ,latitude
+        ,endTime
+        ,eventBelongCity
+        ,eventBelongCounty
+        ,eventBelongTown
+        ,eventBelongVillage
+        ,eventOccurAreaId
+        ,partsId
+        ,partsName
+        ,partsType
+        ,partsTableName
+        ,reportPersonId
+        ,reportPerson
+        ,reportTime
+        ,reportPhone
+        ,contactWay
+        ,isPrivary
+        ,contactAddress
+        ,acceptPersonId
+        ,acceptPerson
+        ,acceptDate
+        ,handleUnitId
+        ,handleUnit
+        ,handleUnitArea
+        ,handleUnitAreaId
+        ,isExposure
+        ,inspectorId
+        ,inspector
+        ,inspectTime
+        ,inspectDesc
+        ,inspectStatus
+        ,eventBasinId
+        ,eventBasinName
+        ,eventRiverId
+        ,eventRiverName
+        ,eventRiverType
+        ,eventReachId
+        ,eventReachName
+        ,eventGridId
+        ,eventGridName
+        ,instructionStatus
+        ,typeName
+        ,tacheHandleTime
+        ,handleEndTime
+        ,eventBelongCityId
+        ,eventBelongCountyId
+        ,eventBelongTownId
+        ,eventBelongVillageId
+        ,processingTime
+        ,isSupervise
+        ,provinceReachId
+        ,cityReachId
+        ,countyReachId
+        ,townReachId
+        ,villageReachId
+        ,worklogId
+        ,patrolId
+        ,componentId
+        ,dataSrcCode
+        ,dataUpFlag
+        ,uploadTime
+    </sql>
+
+    <sql id="sql_condition">
+        <if test="condition != null">
+            <if test="condition.id != null">AND id = #{condition.id}</if>
+            <if test="condition.recver != null">AND recver = #{condition.recver}</if>
+            <if test="condition.serialNo != null and condition.serialNo != ''">AND serialNo = #{condition.serialNo}</if>
+            <if test="condition.type != null and condition.type != ''">AND type = #{condition.type}</if>
+            <if test="condition.eventLevel != null and condition.eventLevel != ''">AND eventLevel = #{condition.eventLevel}</if>
+            <if test="condition.content != null and condition.content != ''">AND content = #{condition.content}</if>
+            <if test="condition.eventResource != null and condition.eventResource != ''">AND eventResource = #{condition.eventResource}</if>
+            <if test="condition.status != null and condition.status != ''">AND status = #{condition.status}</if>
+            <if test="condition.createTime != null">AND createTime = #{condition.createTime}</if>
+            <if test="condition.address != null and condition.address != ''">AND address = #{condition.address}</if>
+            <if test="condition.longitude != null">AND longitude = #{condition.longitude}</if>
+            <if test="condition.latitude != null">AND latitude = #{condition.latitude}</if>
+            <if test="condition.endTime != null">AND endTime = #{condition.endTime}</if>
+            <if test="condition.eventBelongCity != null and condition.eventBelongCity != ''">AND eventBelongCity = #{condition.eventBelongCity}</if>
+            <if test="condition.eventBelongCounty != null and condition.eventBelongCounty != ''">AND eventBelongCounty = #{condition.eventBelongCounty}</if>
+            <if test="condition.eventBelongTown != null and condition.eventBelongTown != ''">AND eventBelongTown = #{condition.eventBelongTown}</if>
+            <if test="condition.eventBelongVillage != null and condition.eventBelongVillage != ''">AND eventBelongVillage = #{condition.eventBelongVillage}</if>
+            <if test="condition.eventOccurAreaId != null">AND eventOccurAreaId = #{condition.eventOccurAreaId}</if>
+            <if test="condition.partsId != null">AND partsId = #{condition.partsId}</if>
+            <if test="condition.partsName != null and condition.partsName != ''">AND partsName = #{condition.partsName}</if>
+            <if test="condition.partsType != null and condition.partsType != ''">AND partsType = #{condition.partsType}</if>
+            <if test="condition.partsTableName != null and condition.partsTableName != ''">AND partsTableName = #{condition.partsTableName}</if>
+            <if test="condition.reportPersonId != null">AND reportPersonId = #{condition.reportPersonId}</if>
+            <if test="condition.reportPerson != null and condition.reportPerson != ''">AND reportPerson = #{condition.reportPerson}</if>
+            <if test="condition.reportTime != null">AND reportTime = #{condition.reportTime}</if>
+            <if test="condition.reportPhone != null and condition.reportPhone != ''">AND reportPhone = #{condition.reportPhone}</if>
+            <if test="condition.contactWay != null and condition.contactWay != ''">AND contactWay = #{condition.contactWay}</if>
+            <if test="condition.isPrivary != null">AND isPrivary = #{condition.isPrivary}</if>
+            <if test="condition.contactAddress != null and condition.contactAddress != ''">AND contactAddress = #{condition.contactAddress}</if>
+            <if test="condition.acceptPersonId != null">AND acceptPersonId = #{condition.acceptPersonId}</if>
+            <if test="condition.acceptPerson != null and condition.acceptPerson != ''">AND acceptPerson = #{condition.acceptPerson}</if>
+            <if test="condition.acceptDate != null">AND acceptDate = #{condition.acceptDate}</if>
+            <if test="condition.handleUnitId != null">AND handleUnitId = #{condition.handleUnitId}</if>
+            <if test="condition.handleUnit != null and condition.handleUnit != ''">AND handleUnit = #{condition.handleUnit}</if>
+            <if test="condition.handleUnitArea != null and condition.handleUnitArea != ''">AND handleUnitArea = #{condition.handleUnitArea}</if>
+            <if test="condition.handleUnitAreaId != null">AND handleUnitAreaId = #{condition.handleUnitAreaId}</if>
+            <if test="condition.isExposure != null and condition.isExposure != ''">AND isExposure =#{condition.isExposure}</if>
+            <if test="condition.inspectorId != null">AND inspectorId = #{condition.inspectorId}</if>
+            <if test="condition.inspector != null and condition.inspector != ''">AND inspector = #{condition.inspector}</if>
+            <if test="condition.inspectTime != null">AND inspectTime = #{condition.inspectTime}</if>
+            <if test="condition.inspectDesc != null and condition.inspectDesc != ''">AND inspectDesc = #{condition.inspectDesc}</if>
+            <if test="condition.inspectStatus != null and condition.inspectStatus != ''">AND inspectStatus = #{condition.inspectStatus}</if>
+            <if test="condition.eventBasinId != null">AND eventBasinId = #{condition.eventBasinId}</if>
+            <if test="condition.eventBasinName != null and condition.eventBasinName != ''">AND eventBasinName = #{condition.eventBasinName}</if>
+            <if test="condition.eventRiverId != null">AND eventRiverId = #{condition.eventRiverId}</if>
+            <if test="condition.eventRiverName != null and condition.eventRiverName != ''">AND eventRiverName = #{condition.eventRiverName}</if>
+            <if test="condition.eventRiverType != null">AND eventRiverType = #{condition.eventRiverType}</if>
+            <if test="condition.eventReachId != null">AND eventReachId = #{condition.eventReachId}</if>
+            <if test="condition.eventReachName != null and condition.eventReachName != ''">AND eventReachName = #{condition.eventReachName}</if>
+            <if test="condition.eventGridId != null">AND eventGridId = #{condition.eventGridId}</if>
+            <if test="condition.eventGridName != null and condition.eventGridName != ''">AND eventGridName = #{condition.eventGridName}</if>
+            <if test="condition.instructionStatus != null and condition.instructionStatus != ''">AND instructionStatus = #{condition.instructionStatus}</if>
+            <if test="condition.typeName != null and entity.typeName != ''">AND typeName = #{condition.typeName}</if>
+            <if test="condition.tacheHandleTime != null">AND tacheHandleTime = #{condition.tacheHandleTime}</if>
+            <if test="condition.handleEndTime != null">AND handleEndTime = #{condition.handleEndTime}</if>
+            <if test="condition.eventBelongCityId != null">AND eventBelongCityId = #{condition.eventBelongCityId}</if>
+            <if test="condition.eventBelongCountyId != null">AND eventBelongCountyId = #{condition.eventBelongCountyId}</if>
+            <if test="condition.eventBelongTownId != null">AND eventBelongTownId = #{condition.eventBelongTownId}</if>
+            <if test="condition.eventBelongVillageId != null">AND eventBelongVillageId = #{condition.eventBelongVillageId}</if>
+            <if test="condition.processingTime != null">AND processingTime = #{condition.processingTime}</if>
+            <if test="condition.isSupervise != null and condition.isSupervise != ''">AND isSupervise = #{condition.isSupervise}</if>
+            <if test="condition.provinceReachId != null">AND provinceReachId = #{condition.provinceReachId}</if>
+            <if test="condition.cityReachId != null">AND cityReachId = #{condition.cityReachId}</if>
+            <if test="condition.countyReachId != null">AND countyReachId = #{condition.countyReachId}</if>
+            <if test="condition.townReachId != null">AND townReachId = #{condition.townReachId}</if>
+            <if test="condition.villageReachId != null">AND villageReachId = #{condition.villageReachId}</if>
+            <if test="condition.worklogId != null and condition.worklogId != ''">AND worklogId = #{condition.worklogId}</if>
+            <if test="condition.patrolId != null and condition.patrolId != ''">AND patrolId = #{condition.patrolId}</if>
+            <if test="condition.componentId != null and condition.componentId != ''">AND componentId = #{condition.componentId}</if>
+            <if test="condition.dataSrcCode != null">AND dataSrcCode = #{condition.dataSrcCode}</if>
+            <if test="condition.dataUpFlag != null">AND dataUpFlag = #{condition.dataUpFlag}</if>
+            <if test="condition.uploadTime != null and condition.uploadTime != ''">AND uploadTime = #{condition.uploadTime}</if>
+        </if>
+    </sql>
+    <sql id="sql_update_set">
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="entity != null">
+                <if test="entity.id != null">,id = #{entity.id}</if>
+                <if test="entity.recver != null">,recver = #{entity.recver}</if>
+                <if test="entity.serialno != null and entity.serialno != ''">,serialno = #{entity.serialno}</if>
+                <if test="entity.type != null and entity.type != ''">,type = #{entity.type}</if>
+                <if test="entity.eventlevel != null and entity.eventlevel != ''">,eventlevel = #{entity.eventlevel}</if>
+                <if test="entity.content != null and entity.content != ''">,content = #{entity.content}</if>
+                <if test="entity.eventresource != null and entity.eventresource != ''">,eventresource = #{entity.eventresource}</if>
+                <if test="entity.status != null and entity.status != ''">,status = #{entity.status}</if>
+                <if test="entity.createtime != null">,createtime = #{entity.createtime}</if>
+                <if test="entity.address != null and entity.address != ''">,address = #{entity.address}</if>
+                <if test="entity.longitude != null">,longitude = #{entity.longitude}</if>
+                <if test="entity.latitude != null">,latitude = #{entity.latitude}</if>
+                <if test="entity.endtime != null">,endtime = #{entity.endtime}
+                    ,processingtime = ROUND((UNIX_TIMESTAMP(#{entity.endtime})-UNIX_TIMESTAMP(acceptdate))/(60*60),2)
+                </if>
+                <if test="entity.eventbelongcity != null and entity.eventbelongcity != ''">,eventbelongcity = #{entity.eventbelongcity}</if>
+                <if test="entity.eventbelongcounty != null and entity.eventbelongcounty != ''">,eventbelongcounty = #{entity.eventbelongcounty}</if>
+                <if test="entity.eventbelongtown != null and entity.eventbelongtown != ''">,eventbelongtown = #{entity.eventbelongtown}</if>
+                <if test="entity.eventbelongvillage != null and entity.eventbelongvillage != ''">,eventbelongvillage = #{entity.eventbelongvillage}</if>
+                <if test="entity.eventoccurareaid != null">,eventoccurareaid = #{entity.eventoccurareaid}</if>
+                <if test="entity.partsid != null">,partsid = #{entity.partsid}</if>
+                <if test="entity.partsname != null and entity.partsname != ''">,partsname = #{entity.partsname}</if>
+                <if test="entity.partstype != null and entity.partstype != ''">,partstype = #{entity.partstype}</if>
+                <if test="entity.partstablename != null and entity.partstablename != ''">,partstablename = #{entity.partstablename}</if>
+                <if test="entity.reportpersonid != null">,reportpersonid = #{entity.reportpersonid}</if>
+                <if test="entity.reportperson != null and entity.reportperson != ''">,reportperson = #{entity.reportperson}</if>
+                <if test="entity.reporttime != null">,reporttime = #{entity.reporttime}</if>
+                <if test="entity.reportphone != null and entity.reportphone != ''">,reportphone = #{entity.reportphone}</if>
+                <if test="entity.contactway != null and entity.contactway != ''">,contactway = #{entity.contactway}</if>
+                <if test="entity.isprivary != null">,isprivary = #{entity.isprivary}</if>
+                <if test="entity.contactaddress != null and entity.contactaddress != ''">,contactaddress = #{entity.contactaddress}</if>
+                <if test="entity.acceptpersonid != null">,acceptpersonid = #{entity.acceptpersonid}</if>
+                <if test="entity.acceptperson != null and entity.acceptperson != ''">,acceptperson = #{entity.acceptperson}</if>
+                <if test="entity.acceptdate != null">,acceptdate = #{entity.acceptdate}</if>
+                <if test="entity.handleunitid != null">,handleunitid = #{entity.handleunitid}</if>
+                <if test="entity.handleunit != null and entity.handleunit != ''">,handleunit = #{entity.handleunit}</if>
+                <if test="entity.handleunitarea != null and entity.handleunitarea != ''">,handleunitarea = #{entity.handleunitarea}</if>
+                <if test="entity.handleunitareaid != null">,handleunitareaid = #{entity.handleunitareaid}</if>
+                <if test="entity.inspectorid != null">,inspectorid = #{entity.inspectorid}</if>
+                <if test="entity.inspector != null and entity.inspector != ''">,inspector = #{entity.inspector}</if>
+                <if test="entity.inspecttime != null">,inspecttime = #{entity.inspecttime}</if>
+                <if test="entity.inspectdesc != null and entity.inspectdesc != ''">,inspectdesc = #{entity.inspectdesc}</if>
+                <if test="entity.inspectstatus != null and entity.inspectstatus != ''">,inspectstatus = #{entity.inspectstatus}</if>
+                <if test="entity.eventbasinid != null">,eventbasinid = #{entity.eventbasinid}</if>
+                <if test="entity.eventbasinname != null and entity.eventbasinname != ''">,eventbasinname = #{entity.eventbasinname}</if>
+                <if test="entity.eventriverid != null">,eventriverid = #{entity.eventriverid}</if>
+                <if test="entity.eventrivername != null and entity.eventrivername != ''">,eventrivername = #{entity.eventrivername}</if>
+                <if test="entity.eventrivertype != null">,eventrivertype = #{entity.eventrivertype}</if>
+                <if test="entity.eventreachid != null">,eventreachid = #{entity.eventreachid}</if>
+                <if test="entity.eventreachname != null and entity.eventreachname != ''">,eventreachname = #{entity.eventreachname}</if>
+                <if test="entity.eventgridid != null">,eventgridid = #{entity.eventgridid}</if>
+                <if test="entity.eventgridname != null and entity.eventgridname != ''">,eventgridname = #{entity.eventgridname}</if>
+                <if test="entity.instructionstatus != null and entity.instructionstatus != ''">,instructionstatus = #{entity.instructionstatus}</if>
+                <if test="entity.tachehandletime != null">,tachehandletime = #{entity.tachehandletime}</if>
+                <if test="entity.handleendtime != null">,handleendtime = #{entity.handleendtime}</if>
+                <if test="entity.typename != null and entity.typename != ''">,typename = #{entity.typename}</if>
+                <if test="entity.eventbelongcityid != null">,eventbelongcityid = #{entity.eventbelongcityid}</if>
+                <if test="entity.eventbelongcountyid != null">,eventbelongcountyid = #{entity.eventbelongcountyid}</if>
+                <if test="entity.eventbelongtownid != null">,eventbelongtownid = #{entity.eventbelongtownid}</if>
+                <if test="entity.eventbelongvillageid != null">,eventbelongvillageid = #{entity.eventbelongvillageid}</if>
+                <if test="entity.issupervise !=null and entity.issupervise != ''">,issupervise = #{entity.issupervise}</if>
+                <if test="entity.isexposure !=null and entity.isexposure != ''">,isexposure = #{entity.isexposure}</if>
+                <if test="entity.provincereachid != null and entity.provincereachid != ''">,provincereachid = #{entity.provincereachid}</if>
+                <if test="entity.cityreachid != null and entity.cityreachid != ''">,cityreachid = #{entity.cityreachid}</if>
+                <if test="entity.countyreachid != null and entity.countyreachid != ''">,countyreachid = #{entity.countyreachid}</if>
+                <if test="entity.townreachid != null and entity.townreachid != ''">,townreachid = #{entity.townreachid}</if>
+                <if test="entity.villagereachid != null and entity.villagereachid != ''">,villagereachid = #{entity.villagereachid}</if>
+                <if test="entity.worklogid != null and entity.worklogid != ''">,worklogid = #{entity.worklogid}</if>
+                <if test="entity.patrolid != null and entity.patrolid != ''">,patrolid = #{entity.patrolid}</if>
+                <if test="entity.componentid != null and entity.componentid != ''">,componentid = #{entity.componentid}</if>
+                <if test="entity.uploadtime != null ">,uploadtime = #{entity.uploadtime}</if>
+            </if>
+        </trim>
+    </sql>
+    <sql id="sql_pagination_end">
+        <![CDATA[limit ${startRow-1},#{limit}]]>
+    </sql>
+
+    <select id="get" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.EhEvent">
+        SELECT
+        <include refid="sql_column_list"/>
+        FROM eh_event
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="sql_condition"/>
+        </trim>
+    </select>
+
+    <select id="getById" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.EhEvent">
+        SELECT
+        <include refid="sql_column_list"/>
+        FROM eh_event
+        WHERE id = #{id}
+    </select>
+
+    <select id="find" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.EhEvent">
+        SELECT
+        <include refid="sql_column_list"/>
+        FROM eh_event
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="sql_condition"/>
+        </trim>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="offset != null">
+            <include refid="sql_pagination_end"/>
+        </if>
+    </select>
+
+    <select id="findByIdList" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.EhEvent">
+        SELECT
+        <include refid="sql_column_list"/>
+        FROM eh_event
+        WHERE id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        <include refid="sql_condition"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+    </select>
+
+    <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(*) FROM eh_event
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="sql_condition"/>
+        </trim>
+    </select>
+
+    <select id="getEventStatDataByReachId" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.ExeAssSystem">
+        <![CDATA[
+        SELECT
+        (SELECT COUNT(*) FROM eh_event WHERE eventreachid=#{condition.eventReachId} AND reporttime BETWEEN #{startTime} AND #{endTime} ) as eventNum,
+        (SELECT COUNT(*) FROM eh_event WHERE eventreachid=#{condition.eventReachId} AND STATUS<>#{condition.status}  AND STATUS<>#{status} AND reporttime BETWEEN #{startTime} AND #{endTime} ) as eventProcessing,
+        (SELECT COUNT(*) FROM eh_event WHERE eventreachid=#{condition.eventReachId} AND (STATUS=#{condition.status}  OR STATUS=#{status}) AND reporttime BETWEEN #{startTime} AND #{endTime} ) as eventClosure
+        ]]>
+    </select>
+
+    <select id="getFirstEvent" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpProblem">
+        SELECT uploadtime FROM eh_event
+        WHERE uploadtime is not null
+         <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+             <if test="regionLevel==2">and eventbelongcityid=#{regionId}</if>
+             <if test="regionLevel==3">and eventbelongcountyid=#{regionId}</if>
+             <if test="regionLevel==4">and eventbelongtownid=#{regionId}</if>
+             <if test="regionLevel==5">and eventbelongvillageid=#{regionId}</if>
+         </if>
+        <if test="regionId==null or regionId==''">
+            and eventbelongcityid in ('330800000000','330700000000','330400000000')
+        </if>
+         ORDER BY uploadtime DESC limit 1
+    </select>
+
+    <select id="getUpEvenList" resultType="com.xxl.job.executor.domain.UpProblem">
+        SELECT
+        ee.id AS problemID,
+        type AS itemList,
+        ee.EVENTRESOURCE AS problemSource,
+        eventreachid AS riverID,
+        CONCAT_WS(
+        ',',
+        reportperson,
+        reportphone
+        ) AS reporterContact,
+        reporttime,
+        content AS description,
+        longitude,
+        latitude,
+        et.resultdesc AS handleStyle,
+        eventbelongcityid,
+        lw.checkitems as checkedItem
+        FROM
+        eh_event ee
+        JOIN (
+        SELECT eventid,resultdesc FROM eh_tache
+        group by eventid
+        )et ON (et.eventid=ee.ID)
+        left join (select id,checkitems from log_worklog)lw on (lw.id = ee.worklogid)
+        WHERE EVENTRESOURCE is not null AND EVENTREACHID is not null
+        <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+            <if test="regionLevel==2">and eventbelongcityid=#{regionId}</if>
+            <if test="regionLevel==3">and eventbelongcountyid=#{regionId}</if>
+            <if test="regionLevel==4">and eventbelongtownid=#{regionId}</if>
+            <if test="regionLevel==5">and eventbelongvillageid=#{regionId}</if>
+        </if>
+        <if test="regionId==null or regionId==''">
+            and eventbelongcityid in ('330800000000','330700000000','330400000000')
+        </if>
+        and status != 'X' and status='Z' and uploadtime is null and createtime >='2017-11-1' /*and ee.src is null*/
+        <!--<if test="uploadtime!=null ">AND createtime>#{uploadtime}</if>-->
+    </select>
+
+    <update id="updateByIdList" parameterType="java.util.Map">
+        UPDATE eh_event set uploadtime=#{uploadtime} where id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        <include refid="sql_condition" />
+    </update>
+
+    <select id="getFirstZhujiEvent" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpProblem">
+        SELECT uploadtime FROM eh_event
+        WHERE uploadtime is not null
+        <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+            <if test="regionLevel==2">and eventbelongcityid=#{regionId}</if>
+            <if test="regionLevel==3">and eventbelongcountyid=#{regionId}</if>
+            <if test="regionLevel==4">and eventbelongtownid=#{regionId}</if>
+            <if test="regionLevel==5">and eventbelongvillageid=#{regionId}</if>
+        </if>
+        ORDER BY uploadtime DESC limit 1
+    </select>
+    <select id="getZhuJiEvent" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.zhuji.UpEvent">
+    SELECT
+        ee.id
+        lw.srcid as patrolid,
+        lw.logdate as createdate,
+        lw.checkitems as problems,
+        ee.content as description,
+        ee.longitude as lng,
+        ee.latitude as lat,
+        ee.address as location
+    FROM
+        eh_event ee
+    JOIN (
+        SELECT
+            id,
+            srcid,
+            logdate,
+            checkitems
+        FROM
+            log_worklog
+        WHERE
+            srcid IS NOT NULL
+    ) lw ON (lw.id = ee.worklogid)
+    </select>
+
+    <update id="update" parameterType="java.util.Map" >
+        update eh_event set uploadtime = #{uploadtime} ,srcid = #{srcid} where id = #{id}
+    </update>
+</mapper>

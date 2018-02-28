@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.second.MdLocusrecordSecondService">
+    <select id="getFirstParolerecord" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.UpParolerecord">
+        SELECT uploadtime FROM md_locusrecord ml join(select log_worklog.id from log_worklog join (select id from md_reach
+        <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+            <if test="regionLevel==2">where cityid=#{regionId}</if>
+            <if test="regionLevel==3">where countyid=#{regionId}</if>
+            <if test="regionLevel==4">where townid=#{regionId}</if>
+            <if test="regionLevel==5">where villageid=#{regionId}</if>
+            <if test="regionLevel==1">where provinceid=#{regionId}</if>
+        </if>
+        <if test="regionId==null or regionId==''">
+            where cityid in ('330800000000','330700000000','330400000000')
+        </if>
+        ) rh on (rh.id=log_worklog.reachid))lw on(lw.id=ml.worklogid) WHERE uploadtime != ""
+
+        ORDER BY uploadtime DESC limit 1
+    </select>
+
+    <select id="getLocusrecordForUpload" parameterType="java.util.Map"
+            resultType="com.xxl.job.executor.domain.UpParolerecord">
+    /*新平台sql*/
+    SELECT
+    ml.ID AS patrolID,
+    su. NAME AS patrollerContact,
+    ct.id AS riverid,
+    ml.distance AS length,
+    ml.starttime,
+    ml.endtime,
+    ct.cityid
+    FROM
+    md_locusrecord ml
+    JOIN (
+    SELECT id,CONCAT_WS(',', NAME, CELLPHONE) AS NAME FROM sm_user) su ON (ml.USERID = su.ID)
+    join(select id,cityid from md_reach
+    <if test="regionId!=null and regionId!='' and regionLevel!=0 ">
+        <if test="regionLevel==2">where cityid=#{regionId}</if>
+        <if test="regionLevel==3">where countyid=#{regionId}</if>
+        <if test="regionLevel==4">where townid=#{regionId}</if>
+        <if test="regionLevel==5">where villageid=#{regionId}</if>
+        <if test="regionLevel==1">where provinceid=#{regionId}</if>
+    </if>
+    <if test="regionId==null or regionId==''">
+        where cityid in ('330800000000','330700000000','330400000000')
+    </if>
+    )ct on (ct.id=ml.reachid)
+    where ml.starttime > #{date} AND uploadtime IS NULL and ml.distance >200 and ml.duration >=5
+    <if test="uploadtime!=null">AND createtime &gt; #{uploadtime
+    </if>
+    </select>
+    <update id="updateUploadtime" parameterType="java.util.Map">
+        UPDATE md_locusrecord set uploadtime=#{uploadtime} where id IN
+        <foreach collection="idList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

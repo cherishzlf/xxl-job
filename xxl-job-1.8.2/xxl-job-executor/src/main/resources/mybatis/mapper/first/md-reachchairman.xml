@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.MdReachchairmanService">
+
+  <sql id="sql_column_list">
+    id
+    ,recver
+    ,chairmanId
+    ,reachId
+    ,reachLevel
+    ,chairmanLevel
+    ,chairmanType
+    ,status
+    ,createUserId
+    ,createTime
+    ,modifyUserId
+    ,modifyTime
+    ,auditUserId
+    ,auditTime
+    ,auditSuggestion
+    ,effectTime
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null and condition.id != ''">AND id = #{condition.id}</if>
+      <if test="condition.recver != null">AND recver = #{condition.recver}</if>
+      <if test="condition.chairmanId != null and condition.chairmanId != ''">AND chairmanId = #{condition.chairmanId}</if>
+      <if test="condition.reachId != null and condition.reachId != ''">AND reachid = #{condition.reachId}</if>
+      <if test="condition.chairmanLevel != null">AND chairmanLevel = #{condition.chairmanLevel}</if>
+      <if test="condition.chairmanType != null">AND chairmanType = #{condition.chairmanType}</if>
+      <if test="condition.status != null">AND status = #{condition.status}</if>
+      <if test="condition.createUserId != null and condition.createUserId != ''">AND createUserId = #{condition.createUserId}</if>
+      <if test="condition.createTime != null">AND createTime = #{condition.createTime}</if>
+      <if test="condition.modifyUserId != null">AND modifyUserId = #{condition.modifyUserId}</if>
+      <if test="condition.modifyTime != null">AND modifyTime = #{condition.modifyTime}</if>
+      <if test="condition.auditUserId != null and condition.auditUserId != ''">AND auditUserId = #{condition.auditUserId}</if>
+      <if test="condition.auditTime != null">AND auditTime = #{condition.auditTime}</if>
+      <if test="condition.auditSuggestion != null">AND auditSuggestion = #{condition.auditSuggestion}</if>
+      <if test="condition.effecttime != null">AND effecttime = #{condition.effecttime}</if>
+      <if test="condition.reachLevel != null">AND reachLevel = #{condition.reachLevel}</if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_end">
+   limit ${startRow-1},${endRow-startRow+1}
+  </sql>
+
+  <select id="get" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdReachchairman">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_reachchairman
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdReachchairman">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_reachchairman
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdReachchairman">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_reachchairman
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="findByIdList" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdReachchairman">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_reachchairman
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(*) FROM md_reachchairman
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="findChairmanByCondition" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.ExeAssReach">
+    SELECT
+      mrc.chairmanid AS chairmanId,
+      su.name AS chairmanName,
+      mrc.chairmanlevel AS chairmanLevel
+    FROM md_reachchairman mrc
+    INNER JOIN sm_user su
+    ON mrc.chairmanid = su.id
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+</mapper>

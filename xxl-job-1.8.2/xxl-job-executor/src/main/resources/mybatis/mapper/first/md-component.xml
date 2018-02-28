@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.MdComponentService">
+
+  <sql id="sql_column_list">
+    id
+    ,recver
+    ,name
+    ,code
+    ,oldcode
+    ,longitude
+    ,latitude
+    ,discription
+    ,imageid
+    ,provinceid
+    ,cityid
+    ,countyid
+    ,townid
+    ,villageid
+    ,gridid
+    ,complevel
+    ,mainclassid
+    ,subclassid
+    ,mainclassname
+    ,subclassname
+    ,batchno
+    ,batchexplain
+    ,source
+    ,distancefromriver
+    ,funcdept
+    ,funcdeptperson
+    ,funcdeptpersontel
+    ,status
+    ,showlevel
+    ,createuserid
+    ,createtime
+    ,modifyuserid
+    ,modifytime
+    ,audituserid
+    ,audittime
+    ,auditsuggestion
+    ,effecttime
+    ,remark
+    ,sortorder
+    ,attentionlevel
+    ,belongunit
+    ,belongperson
+    ,belongpersontel
+    ,mainclassprop
+    ,tablename
+    ,provincereach
+    ,cityreach
+    ,countyreach
+    ,townreach
+    ,villagereach
+    ,writetype
+    ,reachid
+    ,isbindres
+    ,dataSrcCode
+    ,dataUpFlag
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null">AND id = #{condition.id}</if>
+      <if test="condition.recver != null">AND recver = #{condition.recver}</if>
+      <if test="condition.name != null and condition.name != ''">AND name = #{condition.name}</if>
+      <if test="condition.code != null and condition.code != ''">AND code = #{condition.code}</if>
+      <if test="condition.oldCode != null and condition.oldCode != ''">AND oldCode = #{condition.oldCode}</if>
+      <if test="condition.longitude != null">AND longitude = #{condition.longitude}</if>
+      <if test="condition.latitude != null">AND latitude = #{condition.latitude}</if>
+      <if test="condition.discription != null and condition.discription != ''">AND discription = #{condition.discription}</if>
+      <if test="condition.imageId != null and condition.imageId != ''">AND imageId = #{condition.imageId}</if>
+      <if test="condition.provinceId != null">AND provinceId = #{condition.provinceId}</if>
+      <if test="condition.cityId != null">AND cityId = #{condition.cityId}</if>
+      <if test="condition.countyId != null">AND countyId = #{condition.countyId}</if>
+      <if test="condition.townId != null">AND townId = #{condition.townId}</if>
+      <if test="condition.villageId != null">AND villageId = #{condition.villageId}</if>
+      <if test="condition.gridId != null">AND gridId = #{condition.gridId}</if>
+      <if test="condition.compLevel != null">AND compLevel = #{condition.compLevel}</if>
+      <if test="condition.mainClassId != null">AND mainClassId = #{condition.mainClassId}</if>
+      <if test="condition.subClassId != null">AND subClassId = #{condition.subClassId}</if>
+      <if test="condition.mainClassName != null and condition.mainClassName != ''">AND mainClassName = #{condition.mainClassName}</if>
+      <if test="condition.subClassName != null and condition.subClassName != ''">AND subClassName = #{condition.subClassName}</if>
+      <if test="condition.batchNo != null and condition.batchNo != ''">AND batchNo = #{condition.batchNo}</if>
+      <if test="condition.batchExplain != null and condition.batchExplain != ''">AND batchExplain = #{condition.batchExplain}</if>
+      <if test="condition.source != null">AND source = #{condition.source}</if>
+      <if test="condition.distanceFromRiver != null">AND distanceFromRiver = #{condition.distanceFromRiver}</if>
+      <if test="condition.status != null">AND status = #{condition.status}</if>
+      <if test="condition.showLevel != null">AND showLevel = #{condition.showLevel}</if>
+      <if test="condition.createUserId != null">AND createUserId = #{condition.createUserId}</if>
+      <if test="condition.createTime != null">AND createTime = #{condition.createTime}</if>
+      <if test="condition.modifyUserId != null">AND modifyUserId = #{condition.modifyUserId}</if>
+      <if test="condition.modifyTime != null">AND modifyTime = #{condition.modifyTime}</if>
+      <if test="condition.auditUserId != null">AND auditUserId = #{condition.auditUserId}</if>
+      <if test="condition.auditTime != null">AND auditTime = #{condition.auditTime}</if>
+      <if test="condition.auditSuggestion != null and condition.auditSuggestion != ''">AND auditSuggestion = #{condition.auditSuggestion}</if>
+      <if test="condition.effectTime != null">AND effectTime = #{condition.effectTime}</if>
+      <if test="condition.remark != null and condition.remark != ''">AND remark = #{condition.remark}</if>
+      <if test="condition.sortOrder != null">AND sortOrder = #{condition.sortOrder}</if>
+      <if test="condition.attentionLevel != null">AND attentionLevel = #{condition.attentionLevel}</if>
+      <if test="condition.belongUnit != null and condition.belongUnit != ''">AND belongUnit = #{condition.belongUnit}</if>
+      <if test="condition.belongPerson != null and condition.belongPerson != ''">AND belongPerson = #{condition.belongPerson}</if>
+      <if test="condition.belongPersonTel != null and condition.belongPersonTel != ''">AND belongPersonTel = #{condition.belongPersonTel}</if>
+      <if test="condition.writeType !=null and condition.writeType != ''">AND writeType = #{condition.writeType}</if>
+      <if test="condition.funcDept != null">AND funcDept = #{condition.funcDept}</if>
+      <if test="condition.funcDeptPerson != null and condition.funcDeptPerson != ''">AND funcDeptPerson = #{condition.funcDeptPerson}</if>
+      <if test="condition.funcDeptPersonTel != null and condition.funcDeptPersonTel != ''">AND funcDeptPersonTel = #{condition.funcDeptPersonTel}</if>
+      <if test="condition.mainClassProp != null">AND mainClassProp = #{condition.mainClassProp}</if>
+      <if test="condition.tableName != null and condition.tableName != ''">AND tableName = #{condition.tableName}</if>
+      <if test="condition.provinceReach !=null and condition.provinceReach != ''">AND provinceReach = #{condition.provinceReach}</if>
+      <if test="condition.cityReach !=null and condition.cityReach != ''">AND cityReach = #{condition.cityReach}</if>
+      <if test="condition.countyReach !=null and condition.countyReach != ''">AND countyReach = #{condition.countyReach}</if>
+      <if test="condition.townReach !=null and condition.townReach != ''">AND townReach = #{condition.townReach}</if>
+      <if test="condition.villageReach !=null and condition.villageReach != ''">AND villageReach = #{condition.villageReach}</if>
+      <if test="condition.reachId !=null">AND reachId = #{condition.reachId}</if>
+      <if test="condition.isBindRes !=null">AND isBindRes = #{condition.isBindRes}</if>
+      <if test="condition.dataSrcCode !=null">AND dataSrcCode = #{condition.dataSrcCode}</if>
+      <if test="condition.dataUpFlag !=null">AND dataUpFlag = #{condition.dataUpFlag}</if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    limit ${startRow-1},#{limit}
+  ]]>
+  </sql>
+
+  <select id="get" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdComponent">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_component
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdComponent">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_component
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdComponent">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_component
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="findByIdList" parameterType="java.util.Map" resultType="com.xxl.job.executor.domain.MdComponent">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM md_component
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(*) FROM md_component
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+</mapper>

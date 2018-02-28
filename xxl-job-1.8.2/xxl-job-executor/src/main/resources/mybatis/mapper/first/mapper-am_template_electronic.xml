@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxl.job.executor.service.first.AmTemplateElectronicService">
+  <resultMap id="amTemplateElectronic" type="com.xxl.job.executor.domain.AmTemplateElectronic">
+      <result property="id" column="id" />
+      <result property="title" column="title" />
+      <result property="baseinfo" column="baseinfo" />
+      <result property="baseName" column="base_name" />
+      <result property="baseLevel" column="base_level" />
+      <result property="baseUnit" column="base_unit" />
+      <result property="baseDuty" column="base_duty" />
+      <result property="basePhone" column="base_phone" />
+      <result property="baseDepartment" column="base_department" />
+      <result property="baseDepartmentphone" column="base_departmentphone" />
+      <result property="patrolstandar" column="patrolstandar" />
+      <result property="patrolCounty" column="patrol_county" />
+      <result property="patrolCountyperiod" column="patrol_countyperiod" />
+      <result property="patrolTown" column="patrol_town" />
+      <result property="patrolTownperiod" column="patrol_townperiod" />
+      <result property="patrolVillage" column="patrol_village" />
+      <result property="patrolVillageperiod" column="patrol_villageperiod" />
+      <result property="patrolrecord" column="patrolrecord" />
+      <result property="recordCheckitems" column="record_checkitems" />
+      <result property="recordLcountunit" column="record_lcountunit" />
+      <result property="recordDevice" column="record_device" />
+      <result property="recordContent" column="record_content" />
+      <result property="validlocus" column="validlocus" />
+      <result property="validCounty" column="valid_county" />
+      <result property="validTown" column="valid_town" />
+      <result property="validVillage" column="valid_village" />
+      <result property="eventdispose" column="eventdispose" />
+      <result property="eventMarks" column="event_marks" />
+      <result property="eventInterval" column="event_interval" />
+      <result property="additionitem" column="additionitem" />
+      <result property="maxadditionitem" column="maxadditionitem" />
+      <result property="specialid" column="specialid" />
+  </resultMap>
+
+  <sql id="sql_insert_column_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null and entity.id != ''">,id</if>
+      <if test="entity.title != null and entity.title != ''">,title</if>
+      <if test="entity.baseinfo != null">,baseinfo</if>
+      <if test="entity.baseName != null">,base_name</if>
+      <if test="entity.baseLevel != null">,base_level</if>
+      <if test="entity.baseUnit != null">,base_unit</if>
+      <if test="entity.baseDuty != null">,base_duty</if>
+      <if test="entity.basePhone != null">,base_phone</if>
+      <if test="entity.baseDepartment != null">,base_department</if>
+      <if test="entity.baseDepartmentphone != null">,base_departmentphone</if>
+      <if test="entity.patrolstandar != null">,patrolstandar</if>
+      <if test="entity.patrolCounty != null">,patrol_county</if>
+      <if test="entity.patrolCountyperiod != null">,patrol_countyperiod</if>
+      <if test="entity.patrolTown != null">,patrol_town</if>
+      <if test="entity.patrolTownperiod != null">,patrol_townperiod</if>
+      <if test="entity.patrolVillage != null">,patrol_village</if>
+      <if test="entity.patrolVillageperiod != null">,patrol_villageperiod</if>
+      <if test="entity.patrolrecord != null">,patrolrecord</if>
+      <if test="entity.recordCheckitems != null">,record_checkitems</if>
+      <if test="entity.recordLcountunit != null">,record_lcountunit</if>
+      <if test="entity.recordDevice != null">,record_device</if>
+      <if test="entity.recordContent != null">,record_content</if>
+      <if test="entity.validlocus != null">,validlocus</if>
+      <if test="entity.validCounty != null">,valid_county</if>
+      <if test="entity.validTown != null">,valid_town</if>
+      <if test="entity.validVillage != null">,valid_village</if>
+      <if test="entity.eventdispose != null">,eventdispose</if>
+      <if test="entity.eventMarks != null">,event_marks</if>
+      <if test="entity.eventInterval != null">,event_interval</if>
+      <if test="entity.additionitem != null">,additionitem</if>
+      <if test="entity.maxadditionitem != null">,maxadditionitem</if>
+      <if test="entity.specialid != null and entity.specialid != ''">,specialid</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_insert_property_list">
+    <trim prefix="" prefixOverrides=",">
+      <if test="entity.id != null and entity.id != ''">,#{entity.id}</if>
+      <if test="entity.title != null and entity.title != ''">,#{entity.title}</if>
+      <if test="entity.baseinfo != null">,#{entity.baseinfo}</if>
+      <if test="entity.baseName != null">,#{entity.baseName}</if>
+      <if test="entity.baseLevel != null">,#{entity.baseLevel}</if>
+      <if test="entity.baseUnit != null">,#{entity.baseUnit}</if>
+      <if test="entity.baseDuty != null">,#{entity.baseDuty}</if>
+      <if test="entity.basePhone != null">,#{entity.basePhone}</if>
+      <if test="entity.baseDepartment != null">,#{entity.baseDepartment}</if>
+      <if test="entity.baseDepartmentphone != null">,#{entity.baseDepartmentphone}</if>
+      <if test="entity.patrolstandar != null">,#{entity.patrolstandar}</if>
+      <if test="entity.patrolCounty != null">,#{entity.patrolCounty}</if>
+      <if test="entity.patrolCountyperiod != null">,#{entity.patrolCountyperiod}</if>
+      <if test="entity.patrolTown != null">,#{entity.patrolTown}</if>
+      <if test="entity.patrolTownperiod != null">,#{entity.patrolTownperiod}</if>
+      <if test="entity.patrolVillage != null">,#{entity.patrolVillage}</if>
+      <if test="entity.patrolVillageperiod != null">,#{entity.patrolVillageperiod}</if>
+      <if test="entity.patrolrecord != null">,#{entity.patrolrecord}</if>
+      <if test="entity.recordCheckitems != null">,#{entity.recordCheckitems}</if>
+      <if test="entity.recordLcountunit != null">,#{entity.recordLcountunit}</if>
+      <if test="entity.recordDevice != null">,#{entity.recordDevice}</if>
+      <if test="entity.recordContent != null">,#{entity.recordContent}</if>
+      <if test="entity.validlocus != null">,#{entity.validlocus}</if>
+      <if test="entity.validCounty != null">,#{entity.validCounty}</if>
+      <if test="entity.validTown != null">,#{entity.validTown}</if>
+      <if test="entity.validVillage != null">,#{entity.validVillage}</if>
+      <if test="entity.eventdispose != null">,#{entity.eventdispose}</if>
+      <if test="entity.eventMarks != null">,#{entity.eventMarks}</if>
+      <if test="entity.eventInterval != null">,#{entity.eventInterval}</if>
+      <if test="entity.additionitem != null">,#{entity.additionitem}</if>
+      <if test="entity.maxadditionitem != null">,#{entity.maxadditionitem}</if>
+      <if test="entity.specialid != null and entity.specialid != ''">,#{entity.specialid}</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_column_list">
+    id
+    ,title
+    ,baseinfo
+    ,base_name
+    ,base_level
+    ,base_unit
+    ,base_duty
+    ,base_phone
+    ,base_department
+    ,base_departmentphone
+    ,patrolstandar
+    ,patrol_county
+    ,patrol_countyperiod
+    ,patrol_town
+    ,patrol_townperiod
+    ,patrol_village
+    ,patrol_villageperiod
+    ,patrolrecord
+    ,record_checkitems
+    ,record_lcountunit
+    ,record_device
+    ,record_content
+    ,validlocus
+    ,valid_county
+    ,valid_town
+    ,valid_village
+    ,eventdispose
+    ,event_marks
+    ,event_interval
+    ,additionitem
+    ,maxadditionitem
+    ,specialid
+  </sql>
+
+  <sql id="sql_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="entity != null">
+        <if test="entity.id != null and entity.id != ''">,id = #{entity.id}</if>
+        <if test="entity.title != null and entity.title != ''">,title = #{entity.title}</if>
+        <if test="entity.baseinfo != null">,baseinfo = #{entity.baseinfo}</if>
+        <if test="entity.baseName != null">,base_name = #{entity.baseName}</if>
+        <if test="entity.baseLevel != null">,base_level = #{entity.baseLevel}</if>
+        <if test="entity.baseUnit != null">,base_unit = #{entity.baseUnit}</if>
+        <if test="entity.baseDuty != null">,base_duty = #{entity.baseDuty}</if>
+        <if test="entity.basePhone != null">,base_phone = #{entity.basePhone}</if>
+        <if test="entity.baseDepartment != null">,base_department = #{entity.baseDepartment}</if>
+        <if test="entity.baseDepartmentphone != null">,base_departmentphone = #{entity.baseDepartmentphone}</if>
+        <if test="entity.patrolstandar != null">,patrolstandar = #{entity.patrolstandar}</if>
+        <if test="entity.patrolCounty != null">,patrol_county = #{entity.patrolCounty}</if>
+        <if test="entity.patrolCountyperiod != null">,patrol_countyperiod = #{entity.patrolCountyperiod}</if>
+        <if test="entity.patrolTown != null">,patrol_town = #{entity.patrolTown}</if>
+        <if test="entity.patrolTownperiod != null">,patrol_townperiod = #{entity.patrolTownperiod}</if>
+        <if test="entity.patrolVillage != null">,patrol_village = #{entity.patrolVillage}</if>
+        <if test="entity.patrolVillageperiod != null">,patrol_villageperiod = #{entity.patrolVillageperiod}</if>
+        <if test="entity.patrolrecord != null">,patrolrecord = #{entity.patrolrecord}</if>
+        <if test="entity.recordCheckitems != null">,record_checkitems = #{entity.recordCheckitems}</if>
+        <if test="entity.recordLcountunit != null">,record_lcountunit = #{entity.recordLcountunit}</if>
+        <if test="entity.recordDevice != null">,record_device = #{entity.recordDevice}</if>
+        <if test="entity.recordContent != null">,record_content = #{entity.recordContent}</if>
+        <if test="entity.validlocus != null">,validlocus = #{entity.validlocus}</if>
+        <if test="entity.validCounty != null">,valid_county = #{entity.validCounty}</if>
+        <if test="entity.validTown != null">,valid_town = #{entity.validTown}</if>
+        <if test="entity.validVillage != null">,valid_village = #{entity.validVillage}</if>
+        <if test="entity.eventdispose != null">,eventdispose = #{entity.eventdispose}</if>
+        <if test="entity.eventMarks != null">,event_marks = #{entity.eventMarks}</if>
+        <if test="entity.eventInterval != null">,event_interval = #{entity.eventInterval}</if>
+        <if test="entity.additionitem != null">,additionitem = #{entity.additionitem}</if>
+        <if test="entity.maxadditionitem != null">,maxadditionitem = #{entity.maxadditionitem}</if>
+        <if test="entity.specialid != null and entity.specialid != ''">,specialid = #{entity.specialid}</if>
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="sql_force_update_set">
+    <trim prefix="SET" prefixOverrides=",">
+      <if test="_parameter.containsKey('entity_id')">,id = #{entity_id, jdbcType=VARCHAR}</if>
+      <if test="_parameter.containsKey('entity_title')">,title = #{entity_title, jdbcType=TEXT}</if>
+      <if test="_parameter.containsKey('entity_baseinfo')">,baseinfo = #{entity_baseinfo, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_baseName')">,base_name = #{entity_baseName, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_baseLevel')">,base_level = #{entity_baseLevel, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_baseUnit')">,base_unit = #{entity_baseUnit, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_baseDuty')">,base_duty = #{entity_baseDuty, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_basePhone')">,base_phone = #{entity_basePhone, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_baseDepartment')">,base_department = #{entity_baseDepartment, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_baseDepartmentphone')">,base_departmentphone = #{entity_baseDepartmentphone, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolstandar')">,patrolstandar = #{entity_patrolstandar, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolCounty')">,patrol_county = #{entity_patrolCounty, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolCountyperiod')">,patrol_countyperiod = #{entity_patrolCountyperiod, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolTown')">,patrol_town = #{entity_patrolTown, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolTownperiod')">,patrol_townperiod = #{entity_patrolTownperiod, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolVillage')">,patrol_village = #{entity_patrolVillage, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolVillageperiod')">,patrol_villageperiod = #{entity_patrolVillageperiod, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_patrolrecord')">,patrolrecord = #{entity_patrolrecord, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_recordCheckitems')">,record_checkitems = #{entity_recordCheckitems, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_recordLcountunit')">,record_lcountunit = #{entity_recordLcountunit, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_recordDevice')">,record_device = #{entity_recordDevice, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_recordContent')">,record_content = #{entity_recordContent, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_validlocus')">,validlocus = #{entity_validlocus, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_validCounty')">,valid_county = #{entity_validCounty, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_validTown')">,valid_town = #{entity_validTown, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_validVillage')">,valid_village = #{entity_validVillage, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_eventdispose')">,eventdispose = #{entity_eventdispose, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_eventMarks')">,event_marks = #{entity_eventMarks, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_eventInterval')">,event_interval = #{entity_eventInterval, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_additionitem')">,additionitem = #{entity_additionitem, jdbcType=FLOAT}</if>
+      <if test="_parameter.containsKey('entity_maxadditionitem')">,maxadditionitem = #{entity_maxadditionitem, jdbcType=INT}</if>
+      <if test="_parameter.containsKey('entity_specialid')">,specialid = #{entity_specialid, jdbcType=VARCHAR}</if>
+    </trim>
+  </sql>
+
+  <sql id="sql_condition">
+    <if test="condition != null">
+      <if test="condition.id != null and condition.id != ''">AND id = #{condition.id}</if>
+      <if test="condition.title != null and condition.title != ''">AND title = #{condition.title}</if>
+      <if test="condition.baseinfo != null">AND baseinfo = #{condition.baseinfo}</if>
+      <if test="condition.baseName != null">AND base_name = #{condition.baseName}</if>
+      <if test="condition.baseLevel != null">AND base_level = #{condition.baseLevel}</if>
+      <if test="condition.baseUnit != null">AND base_unit = #{condition.baseUnit}</if>
+      <if test="condition.baseDuty != null">AND base_duty = #{condition.baseDuty}</if>
+      <if test="condition.basePhone != null">AND base_phone = #{condition.basePhone}</if>
+      <if test="condition.baseDepartment != null">AND base_department = #{condition.baseDepartment}</if>
+      <if test="condition.baseDepartmentphone != null">AND base_departmentphone = #{condition.baseDepartmentphone}</if>
+      <if test="condition.patrolstandar != null">AND patrolstandar = #{condition.patrolstandar}</if>
+      <if test="condition.patrolCounty != null">AND patrol_county = #{condition.patrolCounty}</if>
+      <if test="condition.patrolCountyperiod != null">AND patrol_countyperiod = #{condition.patrolCountyperiod}</if>
+      <if test="condition.patrolTown != null">AND patrol_town = #{condition.patrolTown}</if>
+      <if test="condition.patrolTownperiod != null">AND patrol_townperiod = #{condition.patrolTownperiod}</if>
+      <if test="condition.patrolVillage != null">AND patrol_village = #{condition.patrolVillage}</if>
+      <if test="condition.patrolVillageperiod != null">AND patrol_villageperiod = #{condition.patrolVillageperiod}</if>
+      <if test="condition.patrolrecord != null">AND patrolrecord = #{condition.patrolrecord}</if>
+      <if test="condition.recordCheckitems != null">AND record_checkitems = #{condition.recordCheckitems}</if>
+      <if test="condition.recordLcountunit != null">AND record_lcountunit = #{condition.recordLcountunit}</if>
+      <if test="condition.recordDevice != null">AND record_device = #{condition.recordDevice}</if>
+      <if test="condition.recordContent != null">AND record_content = #{condition.recordContent}</if>
+      <if test="condition.validlocus != null">AND validlocus = #{condition.validlocus}</if>
+      <if test="condition.validCounty != null">AND valid_county = #{condition.validCounty}</if>
+      <if test="condition.validTown != null">AND valid_town = #{condition.validTown}</if>
+      <if test="condition.validVillage != null">AND valid_village = #{condition.validVillage}</if>
+      <if test="condition.eventdispose != null">AND eventdispose = #{condition.eventdispose}</if>
+      <if test="condition.eventMarks != null">AND event_marks = #{condition.eventMarks}</if>
+      <if test="condition.eventInterval != null">AND event_interval = #{condition.eventInterval}</if>
+      <if test="condition.additionitem != null">AND additionitem = #{condition.additionitem}</if>
+      <if test="condition.maxadditionitem != null">AND maxadditionitem = #{condition.maxadditionitem}</if>
+      <if test="condition.specialid != null and condition.specialid != ''">AND specialid = #{condition.specialid}</if>
+    </if>
+  </sql>
+
+  <sql id="sql_pagination_start">
+  <![CDATA[
+  ]]>
+  </sql>
+
+  <sql id="sql_pagination_end">
+  <![CDATA[
+    LIMIT #{offset}, #{limit}
+  ]]>
+  </sql>
+
+  <insert id="insert" parameterType="java.util.Map">
+    <selectKey keyProperty="entity.id" resultType="java.lang.Long" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO am_template_electronic (
+      <include refid="sql_insert_column_list" />
+    ) VALUES (
+      <include refid="sql_insert_property_list" />
+    )
+  </insert>
+
+  <select id="get" parameterType="java.util.Map" resultMap="amTemplateElectronic">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM am_template_electronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="getById" parameterType="String" resultMap="amTemplateElectronic">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM am_template_electronic
+    WHERE id = #{id}
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="amTemplateElectronic">
+    <if test="offset != null">
+      <include refid="sql_pagination_start" />
+    </if>
+    SELECT
+      <include refid="sql_column_list" />
+    FROM am_template_electronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+    <if test="offset != null">
+      <include refid="sql_pagination_end" />
+    </if>
+  </select>
+
+  <select id="findByIdList" parameterType="java.util.Map" resultMap="amTemplateElectronic">
+    SELECT
+      <include refid="sql_column_list" />
+    FROM am_template_electronic
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+    <if test="orderBy != null">
+      ORDER BY ${orderBy}
+    </if>
+  </select>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(${count_column}) AS count_ FROM am_template_electronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <select id="aggregate" parameterType="java.util.Map" resultType="java.util.HashMap">
+    SELECT ${aggregate_sql} FROM am_template_electronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </select>
+
+  <update id="update" parameterType="java.util.Map">
+    UPDATE am_template_electronic
+    <include refid="sql_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="updateById" parameterType="java.util.Map">
+    UPDATE am_template_electronic
+    <include refid="sql_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <update id="updateByIdList" parameterType="java.util.Map">
+    UPDATE am_template_electronic
+    <include refid="sql_update_set" />
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </update>
+
+  <update id="forceUpdate" parameterType="java.util.Map">
+    UPDATE am_template_electronic
+    <include refid="sql_force_update_set" />
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </update>
+
+  <update id="forceUpdateById" parameterType="java.util.Map">
+    UPDATE am_template_electronic
+    <include refid="sql_force_update_set" />
+    WHERE id = #{id}
+  </update>
+
+  <update id="forceUpdateByIdList" parameterType="java.util.Map">
+    UPDATE am_template_electronic
+    <include refid="sql_force_update_set" />
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </update>
+
+  <delete id="remove" parameterType="java.util.Map">
+    DELETE FROM am_template_electronic
+    <trim prefix="WHERE" prefixOverrides="AND">
+      <include refid="sql_condition" />
+    </trim>
+  </delete>
+
+  <delete id="removeById" parameterType="java.util.Map">
+    DELETE FROM am_template_electronic
+    WHERE id = #{id}
+  </delete>
+
+  <delete id="removeByIdList" parameterType="java.util.Map">
+    DELETE FROM am_template_electronic
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    <include refid="sql_condition" />
+  </delete>
+</mapper>
